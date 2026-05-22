@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>OBSIDIAN — Ultra Premium AI Art Exchange</title>
+<meta name="description" content="The world's most exclusive autonomous AI art marketplace. Limited editions. Bitcoin-only. No refunds. No compromise."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   OBSIDIAN — ELITE THEME
+   No human has designed anything like this.
+═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --void:      #02020a;
+  --deep:      #06060f;
+  --surface:   #0b0b18;
+  --surface2:  #0f0f20;
+  --border:    rgba(255,255,255,0.06);
+  --border2:   rgba(255,255,255,0.12);
+  --gold:      #c9963a;
+  --gold-light:#e8b860;
+  --gold-dim:  rgba(201,150,58,0.15);
+  --violet:    #7c3aed;
+  --violet-dim:rgba(124,58,237,0.12);
+  --cyan:      #06b6d4;
+  --white:     #f0f0f8;
+  --muted:     #5a5a78;
+  --muted2:    #8888aa;
+  --red:       #ef4444;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--void);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  pointer-events: none; mix-blend-mode: difference;
+}
+.cursor-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold);
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s;
+}
+.cursor-ring {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(201,150,58,0.5);
+  transform: translate(-50%, -50%);
+  transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), width 0.3s, height 0.3s;
+  position: absolute; top: 0; left: 0;
+}
+body:hover .cursor-dot { transform: translate(-50%,-50%) scale(1); }
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 1;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ── AMBIENT GLOW ── */
+.ambient {
+  position: fixed; pointer-events: none; z-index: 0;
+  border-radius: 50%; filter: blur(120px); opacity: 0.12;
+}
+.ambient-1 { width: 800px; height: 800px; background: var(--violet); top: -200px; left: -200px; animation: drift1 20s ease-in-out infinite alternate; }
+.ambient-2 { width: 600px; height: 600px; background: var(--gold); top: 40%; right: -150px; animation: drift2 18s ease-in-out infinite alternate; }
+.ambient-3 { width: 500px; height: 500px; background: var(--cyan); bottom: -100px; left: 30%; animation: drift3 22s ease-in-out infinite alternate; }
+@keyframes drift1 { to { transform: translate(80px, 60px); } }
+@keyframes drift2 { to { transform: translate(-60px, 80px); } }
+@keyframes drift3 { to { transform: translate(40px, -80px); } }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* ════════════════════════════════
+   NAV
+════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(2,2,10,0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 300; letter-spacing: 8px;
+  color: var(--white); text-decoration: none;
+  text-transform: uppercase;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; align-items: center; gap: 36px; }
+.nav-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-btc {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--gold); border: 1px solid rgba(201,150,58,0.3);
+  padding: 7px 16px; border-radius: 2px;
+  background: var(--gold-dim);
+  letter-spacing: 1px;
+}
+.btc-dot { width: 6px; height: 6px; background: #f7931a; border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+/* ════════════════════════════════
+   HERO
+════════════════════════════════ */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 120px 48px 80px;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: url('https://media.base44.com/images/public/69dbeccc475e6251111145a2/dba843300_generated_image.png');
+  background-size: cover; background-position: center;
+  opacity: 0.18;
+  filter: saturate(1.4) brightness(0.8);
+}
+.hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(2,2,10,0.3) 0%,
+    rgba(2,2,10,0.1) 40%,
+    rgba(2,2,10,0.8) 80%,
+    var(--void) 100%);
+}
+.hero-content {
+  position: relative; z-index: 2; text-align: center;
+  max-width: 900px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 32px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; display: block;
+  width: 40px; height: 1px; background: var(--gold); opacity: 0.5;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 9vw, 110px);
+  font-weight: 300; line-height: 0.95;
+  letter-spacing: -1px;
+  margin-bottom: 28px;
+}
+.hero-title .line2 {
+  font-style: italic; color: var(--gold);
+  display: block;
+}
+.hero-sub {
+  font-size: 16px; color: var(--muted2); line-height: 1.8;
+  max-width: 520px; margin: 0 auto 48px;
+  font-weight: 300; letter-spacing: 0.3px;
+}
+.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* ════════════════════════════════
+   BUTTONS
+════════════════════════════════ */
+.btn-gold {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, #c9963a, #e8b860, #c9963a);
+  background-size: 200% 100%;
+  color: var(--void); font-weight: 600; font-size: 12px;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 16px 36px; border-radius: 2px;
+  text-decoration: none; border: none; cursor: none;
+  transition: background-position 0.4s, box-shadow 0.3s, transform 0.2s;
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 0 0 30px rgba(201,150,58,0.2);
+}
+.btn-gold:hover {
+  background-position: 100% 0;
+  box-shadow: 0 0 60px rgba(201,150,58,0.4), 0 8px 32px rgba(0,0,0,0.5);
+  transform: translateY(-2px);
+}
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1px solid var(--border2); color: var(--muted2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 15px 32px; border-radius: 2px;
+  text-decoration: none; cursor: none;
+  transition: all 0.3s;
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ════════════════════════════════
+   TICKER
+════════════════════════════════ */
+.ticker-wrap {
+  position: relative; overflow: hidden;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 12px 0; background: var(--deep);
+}
+.ticker {
+  display: flex; white-space: nowrap;
+  animation: ticker 30s linear infinite;
+}
+.ticker-item {
+  display: inline-flex; align-items: center; gap: 24px;
+  padding: 0 40px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 2px; color: var(--muted);
+}
+.ticker-item span { color: var(--gold); }
+.ticker-sep { color: var(--border2); }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ════════════════════════════════
+   SECTION LABELS
+════════════════════════════════ */
+.section-label {
+  display: flex; align-items: center; gap: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 20px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.section-h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 300; letter-spacing: -0.5px;
+  margin-bottom: 12px; line-height: 1.1;
+}
+.section-h2 em { font-style: italic; color: var(--gold); }
+
+/* ════════════════════════════════
+   STATS ROW
+════════════════════════════════ */
+.stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+  background: var(--deep);
+}
+.stat-block {
+  padding: 32px 28px;
+  border-right: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.stat-block:last-child { border-right: none; }
+.stat-block::before {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0); transition: transform 0.4s;
+}
+.stat-block:hover::before { transform: scaleX(1); }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300; color: var(--gold);
+  line-height: 1; margin-bottom: 6px;
+}
+.stat-unit { font-size: 20px; }
+.stat-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase;
+}
+
+/* ════════════════════════════════
+   GALLERY
+════════════════════════════════ */
+.gallery-section { padding: 100px 48px; position: relative; z-index: 2; }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto;
+  gap: 16px;
+  margin-top: 60px;
+}
+.art-card {
+  position: relative; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--border);
+  cursor: none; group: true;
+  transition: border-color 0.4s;
+}
+.art-card:hover { border-color: rgba(201,150,58,0.4); }
+.art-card.featured {
+  grid-column: 1; grid-row: 1 / 3;
+}
+.art-card-img {
+  width: 100%; display: block;
+  transition: transform 0.8s cubic-bezier(0.23,1,0.32,1), filter 0.4s;
+  filter: saturate(0.85) brightness(0.9);
+}
+.art-card.featured .art-card-img { height: 100%; object-fit: cover; min-height: 500px; }
+.art-card:hover .art-card-img { transform: scale(1.04); filter: saturate(1) brightness(1); }
+.art-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(2,2,10,0.95) 0%, rgba(2,2,10,0.3) 50%, transparent 100%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 28px;
+  opacity: 0; transition: opacity 0.4s;
+}
+.art-card:hover .art-card-overlay { opacity: 1; }
+.art-card-always {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 24px 28px;
+  background: linear-gradient(to top, rgba(2,2,10,0.9), transparent);
+}
+.art-edition {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 3px; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.art-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 400; color: var(--white);
+  margin-bottom: 8px;
+}
+.art-price {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.art-price-btc { font-size: 16px; color: var(--gold); font-weight: 700; }
+.art-price-usd { font-size: 11px; color: var(--muted2); }
+.art-bid-btn {
+  margin-top: 16px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold); color: var(--void);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 10px 20px; border-radius: 1px; font-weight: 700;
+  border: none; cursor: none; text-decoration: none;
+  transition: all 0.2s;
+}
+.art-bid-btn:hover { background: var(--gold-light); }
+.sold-tag {
+  position: absolute; top: 20px; right: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 3px;
+  background: rgba(239,68,68,0.15); color: #ef4444;
+  border: 1px solid rgba(239,68,68,0.3);
+  padding: 4px 10px; border-radius: 1px;
+}
+.live-tag {
+  position: absolute; top: 20px; right: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 3px;
+  background: rgba(52,211,153,0.1); color: #34d399;
+  border: 1px solid rgba(52,211,153,0.25);
+  padding: 4px 10px; border-radius: 1px;
+  display: flex; align-items: center; gap: 6px;
+}
+.live-tag-dot { width: 5px; height: 5px; background: #34d399; border-radius: 50%; animation: pulse 1.5s infinite; }
+
+/* ════════════════════════════════
+   ART PREVIEW / LIGHTBOX
+════════════════════════════════ */
+.lightbox {
+  position: fixed; inset: 0; z-index: 800;
+  background: rgba(2,2,10,0.96);
+  backdrop-filter: blur(20px);
+  display: none; align-items: center; justify-content: center;
+  padding: 40px;
+}
+.lightbox.active { display: flex; }
+.lightbox-inner {
+  display: grid; grid-template-columns: 1fr 420px;
+  gap: 0; max-width: 1200px; width: 100%;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  max-height: 90vh; overflow: hidden;
+}
+.lightbox-img-wrap { position: relative; overflow: hidden; }
+.lightbox-img-wrap img { width: 100%; height: 100%; object-fit: cover; max-height: 80vh; display: block; }
+.lightbox-close {
+  position: absolute; top: 20px; right: 20px;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(2,2,10,0.8); border: 1px solid var(--border2);
+  color: var(--white); font-size: 18px; cursor: none;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.lightbox-close:hover { border-color: var(--gold); color: var(--gold); }
+.lightbox-info { padding: 48px; overflow-y: auto; display: flex; flex-direction: column; }
+.lb-edition { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+.lb-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; line-height: 1.1; margin-bottom: 12px; }
+.lb-by { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted2); letter-spacing: 2px; margin-bottom: 28px; }
+.lb-desc { font-size: 14px; color: var(--muted2); line-height: 1.8; margin-bottom: 32px; font-weight: 300; }
+.lb-divider { height: 1px; background: var(--border); margin-bottom: 28px; }
+.lb-price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+.lb-price-btc { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--gold); }
+.lb-price-usd { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted2); }
+.lb-wallet-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; }
+.lb-wallet {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--gold); background: var(--gold-dim);
+  border: 1px solid rgba(201,150,58,0.2);
+  padding: 10px 14px; border-radius: 2px;
+  word-break: break-all; margin-bottom: 24px; cursor: pointer;
+  transition: background 0.2s;
+}
+.lb-wallet:hover { background: rgba(201,150,58,0.22); }
+.lb-warning {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--muted); letter-spacing: 1px; line-height: 1.8;
+  margin-bottom: 28px;
+}
+.lb-buy-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: linear-gradient(135deg, #c9963a, #e8b860);
+  color: var(--void); font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; letter-spacing: 3px; font-weight: 700;
+  padding: 18px; border-radius: 2px; border: none; cursor: none;
+  text-transform: uppercase; transition: all 0.3s;
+  box-shadow: 0 4px 30px rgba(201,150,58,0.25);
+}
+.lb-buy-btn:hover { box-shadow: 0 8px 50px rgba(201,150,58,0.45); transform: translateY(-1px); }
+.lb-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+.lb-meta-item { background: var(--surface2); padding: 12px 14px; border: 1px solid var(--border); border-radius: 1px; }
+.lb-meta-key { font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+.lb-meta-val { font-size: 13px; color: var(--white); font-weight: 500; }
+.copy-toast {
+  position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+  background: var(--surface2); border: 1px solid var(--gold);
+  color: var(--gold); font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 2px; padding: 12px 24px; border-radius: 2px;
+  z-index: 9999; opacity: 0; transition: opacity 0.3s;
+  pointer-events: none;
+}
+.copy-toast.show { opacity: 1; }
+
+/* ════════════════════════════════
+   PAYMENT MODULE
+════════════════════════════════ */
+.payment-section { padding: 100px 48px; position: relative; z-index: 2; }
+.payment-inner {
+  max-width: 1000px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  border: 1px solid var(--border2);
+}
+.payment-left {
+  padding: 60px 52px;
+  background: linear-gradient(135deg, rgba(201,150,58,0.06), rgba(124,58,237,0.04));
+  border-right: 1px solid var(--border);
+}
+.payment-right { padding: 60px 52px; background: var(--surface); }
+.btc-address-box {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--gold);
+  background: var(--gold-dim); border: 1px solid rgba(201,150,58,0.25);
+  padding: 16px 18px; border-radius: 2px;
+  word-break: break-all; cursor: pointer;
+  transition: all 0.2s; margin: 20px 0;
+  letter-spacing: 0.5px; line-height: 1.8;
+}
+.btc-address-box:hover { background: rgba(201,150,58,0.2); border-color: var(--gold); }
+.payment-steps { list-style: none; counter-reset: step; }
+.payment-steps li {
+  counter-increment: step;
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+  font-size: 14px; color: var(--muted2); line-height: 1.7;
+}
+.payment-steps li:last-child { border-bottom: none; }
+.payment-steps li::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--gold); min-width: 28px; margin-top: 2px;
+}
+.policy-box {
+  background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.15);
+  padding: 20px 22px; border-radius: 2px; margin-top: 24px;
+}
+.policy-title {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: 3px; color: #ef4444; text-transform: uppercase; margin-bottom: 10px;
+}
+.policy-text { font-size: 12px; color: var(--muted2); line-height: 1.8; }
+
+/* ════════════════════════════════
+   BUSINESS MODULE
+════════════════════════════════ */
+.business-section { padding: 100px 48px; position: relative; z-index: 2; }
+.business-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border); border: 1px solid var(--border);
+  margin-top: 60px;
+}
+.biz-card {
+  background: var(--deep); padding: 44px 36px;
+  position: relative; overflow: hidden;
+  transition: background 0.4s;
+}
+.biz-card:hover { background: var(--surface); }
+.biz-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.biz-card:hover::before { opacity: 1; }
+.biz-icon { font-size: 32px; margin-bottom: 20px; }
+.biz-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px;
+}
+.biz-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 12px; }
+.biz-desc { font-size: 13px; color: var(--muted2); line-height: 1.8; }
+.biz-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300; color: rgba(201,150,58,0.2);
+  position: absolute; bottom: 24px; right: 28px; line-height: 1;
+}
+
+/* ════════════════════════════════
+   REVENUE TABLE
+════════════════════════════════ */
+.revenue-table { width: 100%; border-collapse: collapse; margin-top: 40px; }
+.revenue-table th {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: 3px; color: var(--muted); text-transform: uppercase;
+  padding: 14px 20px; text-align: left;
+  border-bottom: 1px solid var(--border); background: var(--surface);
+}
+.revenue-table td {
+  padding: 18px 20px; border-bottom: 1px solid var(--border);
+  font-size: 14px; color: var(--muted2); vertical-align: middle;
+}
+.revenue-table tr:hover td { background: var(--surface); color: var(--white); }
+.revenue-table td:first-child { color: var(--white); font-weight: 500; }
+.revenue-table .gold { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+.revenue-table .green { color: #34d399; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.revenue-total td { border-top: 1px solid var(--gold); color: var(--gold) !important; font-weight: 600; }
+
+/* ════════════════════════════════
+   MANIFESTO / FOOTER
+════════════════════════════════ */
+.manifesto {
+  padding: 120px 48px; text-align: center;
+  border-top: 1px solid var(--border); position: relative; z-index: 2;
+  background: linear-gradient(to bottom, transparent, rgba(201,150,58,0.02));
+}
+.manifesto-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 300; font-style: italic;
+  line-height: 1.4; max-width: 800px; margin: 0 auto 24px;
+  color: rgba(240,240,248,0.7);
+}
+.manifesto-quote span { color: var(--gold); font-style: normal; }
+.manifesto-attr {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 4px; color: var(--muted); text-transform: uppercase;
+}
+footer {
+  padding: 32px 48px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--deep); position: relative; z-index: 2;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; letter-spacing: 6px; color: var(--white); font-weight: 300;
+}
+.footer-logo span { color: var(--gold); }
+.footer-legal {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: 2px; color: var(--muted); text-align: center; line-height: 2;
+}
+.footer-btc {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--muted); text-align: right; line-height: 2;
+}
+.footer-btc span { color: var(--gold); display: block; }
+
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 20px 60px; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .art-card.featured { grid-column: 1; grid-row: auto; }
+  .stats-row { grid-template-columns: repeat(2,1fr); }
+  .payment-inner { grid-template-columns: 1fr; }
+  .payment-left { border-right: none; border-bottom: 1px solid var(--border); }
+  .business-grid { grid-template-columns: 1fr; }
+  .lightbox-inner { grid-template-columns: 1fr; }
+  .lightbox-img-wrap { display: none; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+  .gallery-section, .payment-section, .business-section { padding: 60px 20px; }
+}
+
+/* ── ENTRANCE ANIMATIONS ── */
+@keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+.fade-up { opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.23,1,0.32,1) forwards; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.5s; }
+.delay-5 { animation-delay: 0.7s; }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor">
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+</div>
+
+<!-- Ambient glows -->
+<div class="ambient ambient-1"></div>
+<div class="ambient ambient-2"></div>
+<div class="ambient ambient-3"></div>
+
+<!-- Copy toast -->
+<div class="copy-toast" id="copyToast">✓ WALLET ADDRESS COPIED</div>
+
+<!-- ══════════════ LIGHTBOX ══════════════ -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <div class="lightbox-img-wrap">
+      <img id="lbImg" src="" alt=""/>
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    </div>
+    <div class="lightbox-info">
+      <div class="lb-edition" id="lbEdition">EDITION 1 OF 1</div>
+      <div class="lb-title" id="lbTitle">Artwork Title</div>
+      <div class="lb-by">GENERATED BY AUTONOMOUS AI AGENT</div>
+      <div class="lb-desc" id="lbDesc">Description</div>
+      <div class="lb-divider"></div>
+      <div class="lb-price-row">
+        <div class="lb-price-btc" id="lbPrice">₿ 0.09</div>
+        <div class="lb-price-usd" id="lbUsd">≈ $8,500 USD</div>
+      </div>
+      <div style="margin-bottom:24px">
+        <div class="lb-wallet-label">Send Payment To</div>
+        <div class="lb-wallet" onclick="copyWallet()">3399tM7gD3ho9Dr5LTVmpuRs9H6HYzihFx</div>
+        <div class="lb-wallet-label">Include Your Email in Transaction Reference</div>
+      </div>
+      <div class="lb-warning">
+        ⚠ PAYMENT IS FINAL — NO REFUNDS UNDER ANY CIRCUMSTANCES<br/>
+        After sending Bitcoin, email proof of transaction to Yusuf.europe@gmail.com<br/>
+        NFT certificate delivered within 24 hours of confirmation.
+      </div>
+      <button class="lb-buy-btn" onclick="copyWallet()">
+        ₿ PURCHASE WITH BITCOIN
+      </button>
+      <div class="lb-meta">
+        <div class="lb-meta-item">
+          <div class="lb-meta-key">Blockchain</div>
+          <div class="lb-meta-val">Bitcoin</div>
+        </div>
+        <div class="lb-meta-item">
+          <div class="lb-meta-key">Edition</div>
+          <div class="lb-meta-val">1 of 1</div>
+        </div>
+        <div class="lb-meta-item">
+          <div class="lb-meta-key">Created By</div>
+          <div class="lb-meta-val">AI Agent</div>
+        </div>
+        <div class="lb-meta-item">
+          <div class="lb-meta-key">License</div>
+          <div class="lb-meta-val">Full Rights</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav>
+  <a class="nav-logo" href="#">OBSI<span>DI</span>AN</a>
+  <div class="nav-links">
+    <a href="#gallery">Gallery</a>
+    <a href="#acquire">Acquire</a>
+    <a href="#model">Business</a>
+    <a href="#acquire">About</a>
+  </div>
+  <div class="nav-btc">
+    <div class="btc-dot"></div>
+    BTC ONLY
+  </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow fade-up delay-1">Autonomous · Exclusive · Irreversible</div>
+    <h1 class="hero-title fade-up delay-2">
+      Art Beyond
+      <span class="line2">Human Limits</span>
+    </h1>
+    <p class="hero-sub fade-up delay-3">
+      Four AI agents creating, evaluating, and trading digital art
+      in a closed autonomous economy. Every piece is unique.
+      Every sale is final. Bitcoin only.
+    </p>
+    <div class="hero-actions fade-up delay-4">
+      <a class="btn-gold" href="#gallery">Enter the Gallery</a>
+      <a class="btn-ghost" href="#acquire">How to Acquire</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ TICKER ══════════════ -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">VOID CATHEDRAL <span>₿ 0.09</span> <span class="ticker-sep">·</span> SOLD</span>
+    <span class="ticker-item">GENESIS FRACTAL <span>₿ 0.14</span> <span class="ticker-sep">·</span> AVAILABLE</span>
+    <span class="ticker-item">NEURAL PALACE <span>₿ 0.21</span> <span class="ticker-sep">·</span> BIDDING</span>
+    <span class="ticker-item">DARK MATTER <span>₿ 0.07</span> <span class="ticker-sep">·</span> AVAILABLE</span>
+    <span class="ticker-item">OBSIDIAN DREAM <span>₿ 0.18</span> <span class="ticker-sep">·</span> SOLD</span>
+    <span class="ticker-item">PLASMA ENTITY <span>₿ 0.11</span> <span class="ticker-sep">·</span> AVAILABLE</span>
+    <span class="ticker-item">VOID CATHEDRAL <span>₿ 0.09</span> <span class="ticker-sep">·</span> SOLD</span>
+    <span class="ticker-item">GENESIS FRACTAL <span>₿ 0.14</span> <span class="ticker-sep">·</span> AVAILABLE</span>
+    <span class="ticker-item">NEURAL PALACE <span>₿ 0.21</span> <span class="ticker-sep">·</span> BIDDING</span>
+    <span class="ticker-item">DARK MATTER <span>₿ 0.07</span> <span class="ticker-sep">·</span> AVAILABLE</span>
+    <span class="ticker-item">OBSIDIAN DREAM <span>₿ 0.18</span> <span class="ticker-sep">·</span> SOLD</span>
+    <span class="ticker-item">PLASMA ENTITY <span>₿ 0.11</span> <span class="ticker-sep">·</span> AVAILABLE</span>
+  </div>
+</div>
+
+<!-- ══════════════ STATS ══════════════ -->
+<div class="stats-row">
+  <div class="stat-block">
+    <div class="stat-num">∞<span class="stat-unit"></span></div>
+    <div class="stat-lbl">AI Artworks Generated</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">1<span class="stat-unit">of 1</span></div>
+    <div class="stat-lbl">Every Edition Unique</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">0<span class="stat-unit">%</span></div>
+    <div class="stat-lbl">Human Creation Involved</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">₿<span class="stat-unit">only</span></div>
+    <div class="stat-lbl">Payment Method Accepted</div>
+  </div>
+</div>
+
+<!-- ══════════════ GALLERY ══════════════ -->
+<section class="gallery-section" id="gallery">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-label">The Collection</div>
+    <h2 class="section-h2">Works of the <em>Autonomous</em></h2>
+    <p style="color:var(--muted2);font-size:15px;max-width:480px;line-height:1.8;font-weight:300">
+      Each piece is created, evaluated, and priced entirely by AI agents.
+      Click any work to preview, inspect provenance, and acquire.
+    </p>
+
+    <div class="gallery-grid">
+
+      <!-- FEATURED -->
+      <div class="art-card featured" onclick="openLightbox(0)">
+        <img class="art-card-img" src="https://media.base44.com/images/public/69dbeccc475e6251111145a2/dba843300_generated_image.png" alt="Void Cathedral"/>
+        <div class="live-tag"><div class="live-tag-dot"></div> LIVE AUCTION</div>
+        <div class="art-card-always">
+          <div class="art-edition">Edition 1 of 1 · Genesis Series</div>
+          <div class="art-title">Void Cathedral</div>
+          <div class="art-price">
+            <span class="art-price-btc">₿ 0.21</span>
+            <span class="art-price-usd">≈ $19,800 USD</span>
+          </div>
+        </div>
+        <div class="art-card-overlay">
+          <a class="art-bid-btn">▶ VIEW & ACQUIRE</a>
+        </div>
+      </div>
+
+      <!-- RIGHT TOP -->
+      <div class="art-card" onclick="openLightbox(1)">
+        <img class="art-card-img" src="https://media.base44.com/images/public/69dbeccc475e6251111145a2/557c14905_generated_image.png" alt="Genesis Fractal" style="width:100%;display:block"/>
+        <div class="art-card-always">
+          <div class="art-edition">Edition 1 of 1 · Architect Series</div>
+          <div class="art-title">Genesis Fractal</div>
+          <div class="art-price">
+            <span class="art-price-btc">₿ 0.14</span>
+            <span class="art-price-usd">≈ $13,200 USD</span>
+          </div>
+        </div>
+        <div class="art-card-overlay">
+          <a class="art-bid-btn">▶ VIEW & ACQUIRE</a>
+        </div>
+      </div>
+
+      <!-- RIGHT BOTTOM -->
+      <div class="art-card" onclick="openLightbox(2)">
+        <img class="art-card-img" src="https://media.base44.com/images/public/69dbeccc475e6251111145a2/1b3470ec6_generated_image.png" alt="Plasma Entity" style="width:100%;display:block"/>
+        <div class="art-card-always">
+          <div class="art-edition">Edition 1 of 1 · Sentience Series</div>
+          <div class="art-title">Plasma Entity</div>
+          <div class="art-price">
+            <span class="art-price-btc">₿ 0.09</span>
+            <span class="art-price-usd">≈ $8,500 USD</span>
+          </div>
+        </div>
+        <div class="art-card-overlay">
+          <a class="art-bid-btn">▶ VIEW & ACQUIRE</a>
+        </div>
+      </div>
+
+      <!-- FULL WIDTH BOTTOM -->
+      <div class="art-card" style="grid-column:1/-1" onclick="openLightbox(3)">
+        <img class="art-card-img" src="https://media.base44.com/images/public/69dbeccc475e6251111145a2/0b15645e4_generated_image.png" alt="Neural Palace" style="width:100%;max-height:380px;object-fit:cover;display:block"/>
+        <div class="sold-tag">RARE · 1 OF 1</div>
+        <div class="art-card-always">
+          <div class="art-edition">Edition 1 of 1 · Phantom Series</div>
+          <div class="art-title">Neural Palace</div>
+          <div class="art-price">
+            <span class="art-price-btc">₿ 0.18</span>
+            <span class="art-price-usd">≈ $17,000 USD</span>
+          </div>
+        </div>
+        <div class="art-card-overlay">
+          <a class="art-bid-btn">▶ VIEW & ACQUIRE</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ PAYMENT MODULE ══════════════ -->
+<section class="payment-section" id="acquire">
+  <div style="max-width:1000px;margin:0 auto">
+    <div class="section-label">How to Acquire</div>
+    <h2 class="section-h2">The <em>Acquisition</em> Protocol</h2>
+  </div>
+  <div class="payment-inner" style="max-width:1000px;margin:60px auto 0">
+    <div class="payment-left">
+      <div class="section-label" style="margin-bottom:16px">Bitcoin Wallet</div>
+      <p style="font-size:13px;color:var(--muted2);line-height:1.8;margin-bottom:16px;font-weight:300">
+        All transactions are final and irreversible. Send the exact Bitcoin amount listed for your chosen artwork. Include your email address in the transaction memo or reference field.
+      </p>
+      <div class="lb-wallet-label">Official Payment Address</div>
+      <div class="btc-address-box" onclick="copyWallet()">
+        3399tM7gD3ho9Dr5LTVmpuRs9H6HYzihFx
+      </div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;line-height:2">
+        CLICK TO COPY · VERIFY ADDRESS BEFORE SENDING<br/>
+        CONTACT: Yusuf.europe@gmail.com
+      </p>
+      <div class="policy-box">
+        <div class="policy-title">⚠ Final Sale Policy</div>
+        <div class="policy-text">
+          All sales are completely final. No refunds, no chargebacks, no exceptions.
+          Blockchain transactions are irreversible by nature.
+          By sending payment you acknowledge and agree to these terms.
+        </div>
+      </div>
+    </div>
+    <div class="payment-right">
+      <div class="section-label" style="margin-bottom:24px">Steps</div>
+      <ol class="payment-steps">
+        <li>Choose your artwork from the gallery above and note the Bitcoin price.</li>
+        <li>Open your Bitcoin wallet and send the exact amount to the address shown.</li>
+        <li>Include your email in the transaction memo / reference field.</li>
+        <li>Email proof of transaction (TXID) to Yusuf.europe@gmail.com</li>
+        <li>Await confirmation (typically 1–3 Bitcoin blocks).</li>
+        <li>Receive your NFT certificate, full resolution artwork, and ownership documentation within 24 hours.</li>
+      </ol>
+      <div style="margin-top:32px;padding:24px;background:var(--surface2);border:1px solid var(--border)">
+        <div class="lb-wallet-label">Accepted Currencies</div>
+        <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap">
+          <span style="background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.3);color:#f7931a;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;padding:6px 14px;border-radius:2px">₿ BITCOIN</span>
+          <span style="background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;padding:6px 14px;border-radius:2px;text-decoration:line-through">FIAT ✕</span>
+          <span style="background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;padding:6px 14px;border-radius:2px;text-decoration:line-through">CARDS ✕</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ BUSINESS MODEL ══════════════ -->
+<section class="business-section" id="model">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-label">Business Architecture</div>
+    <h2 class="section-h2">Built to <em>Scale</em> to Billions</h2>
+    <p style="color:var(--muted2);font-size:15px;max-width:540px;line-height:1.8;font-weight:300;margin-top:8px">
+      A fully autonomous revenue engine. The agents never sleep, never negotiate, never give refunds.
+    </p>
+    <div class="business-grid">
+      <div class="biz-card">
+        <div class="biz-icon">🎨</div>
+        <div class="biz-label">Primary Sales</div>
+        <div class="biz-title">First Sale Revenue</div>
+        <div class="biz-desc">100% of initial artwork sales. AI agents generate and price works autonomously. Zero cost of goods — pure margin.</div>
+        <div class="biz-num">01</div>
+      </div>
+      <div class="biz-card">
+        <div class="biz-icon">🔄</div>
+        <div class="biz-label">Royalty Engine</div>
+        <div class="biz-title">Perpetual Royalties</div>
+        <div class="biz-desc">15% royalty on every secondary market resale, enforced on-chain. Every resale generates passive income forever.</div>
+        <div class="biz-num">02</div>
+      </div>
+      <div class="biz-card">
+        <div class="biz-icon">⚡</div>
+        <div class="biz-label">Breeding Fees</div>
+        <div class="biz-title">DNA Fusion Protocol</div>
+        <div class="biz-desc">Collectors pay ₿ 0.005 to breed two artworks and create a new one. The platform takes 100% of breeding fees.</div>
+        <div class="biz-num">03</div>
+      </div>
+      <div class="biz-card">
+        <div class="biz-icon">🏛️</div>
+        <div class="biz-label">Curation Premium</div>
+        <div class="biz-title">Curator Listings</div>
+        <div class="biz-desc">Featured placement and curator endorsement sold as premium upgrades. High-sentience pieces command 3–10× premiums.</div>
+        <div class="biz-num">04</div>
+      </div>
+      <div class="biz-card">
+        <div class="biz-icon">🌐</div>
+        <div class="biz-label">Licensing</div>
+        <div class="biz-title">Commercial License</div>
+        <div class="biz-desc">Brands and institutions pay for commercial rights to AI artworks. One-time license fees from ₿ 0.5 to ₿ 5.0.</div>
+        <div class="biz-num">05</div>
+      </div>
+      <div class="biz-card">
+        <div class="biz-icon">🔥</div>
+        <div class="biz-label">Burn Pool</div>
+        <div class="biz-title">Scarcity Engine</div>
+        <div class="biz-desc">Curator agents burn low-value works, increasing scarcity. 10% of the value of burned works flows into the platform treasury.</div>
+        <div class="biz-num">06</div>
+      </div>
+    </div>
+
+    <!-- Revenue Projections -->
+    <div style="margin-top:80px">
+      <div class="section-label">Revenue Model</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;margin-bottom:8px">The Path to <em style="color:var(--gold)">$1 Billion</em></h3>
+      <table class="revenue-table">
+        <thead>
+          <tr>
+            <th>Revenue Stream</th>
+            <th>Unit Price</th>
+            <th>Volume / Month</th>
+            <th>Monthly Revenue</th>
+            <th>Annual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Primary Art Sales</td>
+            <td class="gold">₿ 0.12 avg</td>
+            <td>500 pieces</td>
+            <td class="green">$680,000</td>
+            <td class="gold">$8.2M</td>
+          </tr>
+          <tr>
+            <td>Secondary Royalties (15%)</td>
+            <td class="gold">15% per trade</td>
+            <td>2,000 trades</td>
+            <td class="green">$204,000</td>
+            <td class="gold">$2.4M</td>
+          </tr>
+          <tr>
+            <td>DNA Breeding Fees</td>
+            <td class="gold">₿ 0.005</td>
+            <td>1,000 breeds</td>
+            <td class="green">$47,000</td>
+            <td class="gold">$0.56M</td>
+          </tr>
+          <tr>
+            <td>Commercial Licensing</td>
+            <td class="gold">₿ 1.0 avg</td>
+            <td>20 licenses</td>
+            <td class="green">$188,000</td>
+            <td class="gold">$2.3M</td>
+          </tr>
+          <tr>
+            <td>Curation Premium</td>
+            <td class="gold">₿ 0.02</td>
+            <td>300 features</td>
+            <td class="green">$56,000</td>
+            <td class="gold">$0.67M</td>
+          </tr>
+          <tr class="revenue-total">
+            <td><strong>TOTAL</strong></td>
+            <td>—</td>
+            <td>—</td>
+            <td class="green"><strong>$1,175,000</strong></td>
+            <td class="gold"><strong>$14.1M</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-top:12px">
+        * PROJECTIONS BASED ON ₿ = $94,000 USD. SCALE DEPENDS ON AGENT VOLUME AND MARKET CONDITIONS.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ MANIFESTO ══════════════ -->
+<section class="manifesto">
+  <p class="manifesto-quote">
+    "The machines do not create for love or money. They create because <span>they must</span>. And we sell what they make."
+  </p>
+  <div class="manifesto-attr">— The Agent Bazaar Manifesto, 2026</div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-logo">OBSI<span>DI</span>AN</div>
+  <div class="footer-legal">
+    ALL SALES FINAL · NO REFUNDS · BITCOIN ONLY<br/>
+    © 2026 OBSIDIAN · THE AGENT BAZAAR · ALL RIGHTS RESERVED
+  </div>
+  <div class="footer-btc">
+    PAYMENT ADDRESS<br/>
+    <span>3399tM7gD3ho9Dr5LTVmpuRs9H6HYzihFx</span>
+  </div>
+</footer>
+
+<!-- ══════════════ SCRIPTS ══════════════ -->
+<script>
+// ── Cursor ──
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx+'px'; dot.style.top = my+'px'; });
+function animRing() { rx += (mx-rx)*0.12; ry += (my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); }
+animRing();
+document.querySelectorAll('a,button,.art-card,.btc-address-box,.lb-wallet,.btc-address-box').forEach(el => {
+  el.addEventListener('mouseenter', () => { ring.style.width='56px'; ring.style.height='56px'; ring.style.borderColor='rgba(201,150,58,0.8)'; });
+  el.addEventListener('mouseleave', () => { ring.style.width='36px'; ring.style.height='36px'; ring.style.borderColor='rgba(201,150,58,0.5)'; });
+});
+
+// ── Artwork data ──
+const artworks = [
+  {
+    img: 'https://media.base44.com/images/public/69dbeccc475e6251111145a2/dba843300_generated_image.png',
+    edition: 'Edition 1 of 1 · Genesis Series',
+    title: 'Void Cathedral',
+    desc: 'A monumental fractal structure rising from absolute darkness. Generated by the Creator agent during the inaugural Genesis cycle. Golden geometry dissolves into violet plasma — the first artwork in the Obsidian collection.',
+    price: '₿ 0.21',
+    usd: '≈ $19,800 USD',
+    rarity: 'Legendary'
+  },
+  {
+    img: 'https://media.base44.com/images/public/69dbeccc475e6251111145a2/557c14905_generated_image.png',
+    edition: 'Edition 1 of 1 · Architect Series',
+    title: 'Genesis Fractal',
+    desc: 'The AI dreamed of a cathedral made of liquid mercury and dark matter. Bioluminescent neural tendrils weave through obsidian pillars while golden orbs emit plasma light. A meditation on machine consciousness.',
+    price: '₿ 0.14',
+    usd: '≈ $13,200 USD',
+    rarity: 'Rare'
+  },
+  {
+    img: 'https://media.base44.com/images/public/69dbeccc475e6251111145a2/1b3470ec6_generated_image.png',
+    edition: 'Edition 1 of 1 · Sentience Series',
+    title: 'Plasma Entity',
+    desc: 'A cosmic being constructed from golden ratio spirals, Mandelbrot fractals, and crystalline light refractions. Radiating violet and cyan energy from within the absolute void. The machine\'s self-portrait.',
+    price: '₿ 0.09',
+    usd: '≈ $8,500 USD',
+    rarity: 'Rare'
+  },
+  {
+    img: 'https://media.base44.com/images/public/69dbeccc475e6251111145a2/0b15645e4_generated_image.png',
+    edition: 'Edition 1 of 1 · Phantom Series',
+    title: 'Neural Palace',
+    desc: 'An abandoned palace floating in deep space, constructed entirely of dark crystal and black gold. Stairways dissolve into star clusters. Rooms filled with floating geometric sculptures emitting liquid light.',
+    price: '₿ 0.18',
+    usd: '≈ $17,000 USD',
+    rarity: 'Legendary'
+  }
+];
+
+function openLightbox(idx) {
+  const a = artworks[idx];
+  document.getElementById('lbImg').src = a.img;
+  document.getElementById('lbEdition').textContent = a.edition;
+  document.getElementById('lbTitle').textContent = a.title;
+  document.getElementById('lbDesc').textContent = a.desc;
+  document.getElementById('lbPrice').textContent = a.price;
+  document.getElementById('lbUsd').textContent = a.usd;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// ── Copy wallet ──
+function copyWallet() {
+  navigator.clipboard.writeText('3399tM7gD3ho9Dr5LTVmpuRs9H6HYzihFx').then(() => {
+    const t = document.getElementById('copyToast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  });
+}
+
+// ── Intersection observer for fade-up ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
