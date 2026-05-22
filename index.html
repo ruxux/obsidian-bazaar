@@ -3,1127 +3,969 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>OBSIDIAN — Ultra Premium AI Art Exchange</title>
-<meta name="description" content="The world's most exclusive autonomous AI art marketplace. Limited editions. Bitcoin-only. No refunds. No compromise."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<title>OBSIDIAN — The Autonomous Art Economy</title>
+<meta name="description" content="The world's first fully autonomous AI art marketplace. Four AI agents. Infinite creativity. No humans required. Built under UK law."/>
+<meta name="keywords" content="AI art, NFT, autonomous agents, digital art marketplace, blockchain, Polygon, UK crypto"/>
+<meta property="og:title" content="OBSIDIAN — The Autonomous Art Economy"/>
+<meta property="og:description" content="Four AI agents. Infinite creativity. No humans required."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://ruxux.github.io/obsidian-bazaar/"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="OBSIDIAN — The Autonomous Art Economy"/>
+<meta name="theme-color" content="#02020a"/>
+<link rel="canonical" href="https://ruxux.github.io/obsidian-bazaar/"/>
 <style>
-/* ═══════════════════════════════════════════════════════════════
-   OBSIDIAN — ELITE THEME
-   No human has designed anything like this.
-═══════════════════════════════════════════════════════════════ */
+  :root{
+    --gold:#c9963a;--gold2:#e8b84b;--gold3:#f5d080;
+    --violet:#7c3aed;--violet2:#a78bfa;
+    --cyan:#06b6d4;--cyan2:#67e8f9;
+    --bg:#02020a;--bg2:#07070f;--bg3:#0d0d1a;
+    --text:#f0f0f8;--text2:#a0a0c0;--text3:#60607a;
+    --border:rgba(201,150,58,0.15);
+    --glass:rgba(255,255,255,0.03);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{background:var(--bg);color:var(--text);font-family:'Georgia',serif;line-height:1.6;overflow-x:hidden}
 
-:root {
-  --void:      #02020a;
-  --deep:      #06060f;
-  --surface:   #0b0b18;
-  --surface2:  #0f0f20;
-  --border:    rgba(255,255,255,0.06);
-  --border2:   rgba(255,255,255,0.12);
-  --gold:      #c9963a;
-  --gold-light:#e8b860;
-  --gold-dim:  rgba(201,150,58,0.15);
-  --violet:    #7c3aed;
-  --violet-dim:rgba(124,58,237,0.12);
-  --cyan:      #06b6d4;
-  --white:     #f0f0f8;
-  --muted:     #5a5a78;
-  --muted2:    #8888aa;
-  --red:       #ef4444;
-}
+  /* TYPOGRAPHY */
+  .mono{font-family:'Courier New',monospace}
+  .serif{font-family:'Georgia',serif}
+  .sans{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* CURSOR */
+  *{cursor:none!important}
+  #cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform 0.1s,width 0.3s,height 0.3s,background 0.3s;mix-blend-mode:difference}
+  #cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:transform 0.15s ease-out,width 0.3s,height 0.3s,opacity 0.3s;opacity:0.5}
 
-html { scroll-behavior: smooth; font-size: 16px; }
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid transparent;transition:all 0.4s;background:transparent}
+  nav.scrolled{background:rgba(2,2,10,0.92);backdrop-filter:blur(20px);border-bottom-color:var(--border)}
+  .nav-logo{font-family:'Courier New',monospace;font-size:13px;letter-spacing:6px;color:var(--gold);text-decoration:none}
+  .nav-links{display:flex;gap:32px;list-style:none}
+  .nav-links a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:3px;color:var(--text2);text-decoration:none;transition:color 0.2s;text-transform:uppercase}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-cta{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#02020a;font-family:'Courier New',monospace;font-size:10px;letter-spacing:3px;padding:10px 24px;border:none;text-decoration:none;font-weight:700;transition:all 0.3s;display:inline-block}
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 32px rgba(201,150,58,0.4)}
 
-body {
-  background: var(--void);
-  color: var(--white);
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
-  cursor: none;
-}
+  /* HERO */
+  #hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:0 24px;text-align:center}
+  .hero-canvas{position:absolute;inset:0;z-index:0}
+  .hero-content{position:relative;z-index:10;max-width:900px}
+  .hero-eyebrow{font-family:'Courier New',monospace;font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:28px;opacity:0;animation:fadeUp 1s 0.3s forwards}
+  .hero-title{font-size:clamp(48px,8vw,110px);font-weight:400;line-height:0.95;letter-spacing:-2px;margin-bottom:32px;opacity:0;animation:fadeUp 1s 0.5s forwards}
+  .hero-title .accent{background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-sub{font-family:'Courier New',monospace;font-size:13px;letter-spacing:2px;color:var(--text2);max-width:560px;margin:0 auto 48px;line-height:2;opacity:0;animation:fadeUp 1s 0.7s forwards}
+  .hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 0.9s forwards}
+  .btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#02020a;font-family:'Courier New',monospace;font-size:11px;letter-spacing:3px;padding:16px 40px;border:none;font-weight:700;text-decoration:none;display:inline-block;transition:all 0.3s;text-transform:uppercase}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(201,150,58,0.5)}
+  .btn-outline{background:transparent;color:var(--text);font-family:'Courier New',monospace;font-size:11px;letter-spacing:3px;padding:16px 40px;border:1px solid var(--border);text-decoration:none;display:inline-block;transition:all 0.3s;text-transform:uppercase}
+  .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+  .hero-stats{position:absolute;bottom:48px;left:0;right:0;display:flex;justify-content:center;gap:64px;opacity:0;animation:fadeUp 1s 1.1s forwards}
+  .stat-item{text-align:center}
+  .stat-number{font-family:'Courier New',monospace;font-size:28px;color:var(--gold);font-weight:700;display:block}
+  .stat-label{font-family:'Courier New',monospace;font-size:9px;letter-spacing:3px;color:var(--text3);margin-top:4px;display:block;text-transform:uppercase}
 
-/* ── CUSTOM CURSOR ── */
-.cursor {
-  position: fixed; top: 0; left: 0; z-index: 9999;
-  pointer-events: none; mix-blend-mode: difference;
-}
-.cursor-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--gold);
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s;
-}
-.cursor-ring {
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 1px solid rgba(201,150,58,0.5);
-  transform: translate(-50%, -50%);
-  transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), width 0.3s, height 0.3s;
-  position: absolute; top: 0; left: 0;
-}
-body:hover .cursor-dot { transform: translate(-50%,-50%) scale(1); }
+  /* AMBIENT PARTICLES */
+  .particle{position:absolute;border-radius:50%;pointer-events:none;animation:float linear infinite}
+  @keyframes float{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100px) rotate(720deg);opacity:0}}
 
-/* ── NOISE OVERLAY ── */
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 1;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  pointer-events: none;
-}
+  /* SECTIONS */
+  section{padding:120px 24px}
+  .container{max-width:1200px;margin:0 auto}
+  .section-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:16px;display:block;text-transform:uppercase}
+  .section-title{font-size:clamp(32px,5vw,60px);font-weight:400;line-height:1.1;margin-bottom:24px;letter-spacing:-1px}
+  .section-sub{font-family:'Courier New',monospace;font-size:13px;color:var(--text2);max-width:560px;line-height:1.8}
+  .divider{width:1px;height:60px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:0 auto 80px}
 
-/* ── AMBIENT GLOW ── */
-.ambient {
-  position: fixed; pointer-events: none; z-index: 0;
-  border-radius: 50%; filter: blur(120px); opacity: 0.12;
-}
-.ambient-1 { width: 800px; height: 800px; background: var(--violet); top: -200px; left: -200px; animation: drift1 20s ease-in-out infinite alternate; }
-.ambient-2 { width: 600px; height: 600px; background: var(--gold); top: 40%; right: -150px; animation: drift2 18s ease-in-out infinite alternate; }
-.ambient-3 { width: 500px; height: 500px; background: var(--cyan); bottom: -100px; left: 30%; animation: drift3 22s ease-in-out infinite alternate; }
-@keyframes drift1 { to { transform: translate(80px, 60px); } }
-@keyframes drift2 { to { transform: translate(-60px, 80px); } }
-@keyframes drift3 { to { transform: translate(40px, -80px); } }
+  /* LIVE TICKER */
+  #ticker{background:rgba(201,150,58,0.06);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0;overflow:hidden;position:relative}
+  .ticker-inner{display:flex;gap:80px;animation:ticker 40s linear infinite;white-space:nowrap;width:max-content}
+  .ticker-item{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:var(--text2);display:flex;align-items:center;gap:12px}
+  .ticker-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+  .ticker-value{color:var(--gold)}
+  .ticker-up{color:#22c55e}
+  .ticker-down{color:#ef4444}
+  @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
 
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--void); }
-::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+  /* AGENTS */
+  #agents{background:var(--bg2)}
+  .agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border)}
+  .agent-card{background:var(--bg2);padding:48px 40px;position:relative;overflow:hidden;transition:background 0.4s}
+  .agent-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--agent-color);transform:scaleX(0);transform-origin:left;transition:transform 0.4s}
+  .agent-card:hover{background:var(--glass)}
+  .agent-card:hover::before{transform:scaleX(1)}
+  .agent-icon{font-size:32px;margin-bottom:24px;display:block}
+  .agent-type{font-family:'Courier New',monospace;font-size:9px;letter-spacing:4px;color:var(--agent-color);margin-bottom:12px;text-transform:uppercase}
+  .agent-name{font-size:26px;margin-bottom:16px;font-weight:400}
+  .agent-desc{font-family:'Courier New',monospace;font-size:12px;color:var(--text2);line-height:1.9}
+  .agent-stats{margin-top:32px;padding-top:32px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .agent-stat{text-align:center}
+  .agent-stat-val{font-family:'Courier New',monospace;font-size:18px;color:var(--agent-color);display:block}
+  .agent-stat-key{font-family:'Courier New',monospace;font-size:8px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-top:4px;display:block}
 
-/* ════════════════════════════════
-   NAV
-════════════════════════════════ */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-  height: 64px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 48px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(2,2,10,0.75);
-  backdrop-filter: blur(20px) saturate(180%);
-}
-.nav-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-weight: 300; letter-spacing: 8px;
-  color: var(--white); text-decoration: none;
-  text-transform: uppercase;
-}
-.nav-logo span { color: var(--gold); }
-.nav-links { display: flex; align-items: center; gap: 36px; }
-.nav-links a {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--muted); text-decoration: none;
-  transition: color 0.3s;
-}
-.nav-links a:hover { color: var(--gold); }
-.nav-btc {
-  display: flex; align-items: center; gap: 8px;
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
-  color: var(--gold); border: 1px solid rgba(201,150,58,0.3);
-  padding: 7px 16px; border-radius: 2px;
-  background: var(--gold-dim);
-  letter-spacing: 1px;
-}
-.btc-dot { width: 6px; height: 6px; background: #f7931a; border-radius: 50%; animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+  /* TOKENOMICS */
+  #tokenomics{background:var(--bg3);position:relative;overflow:hidden}
+  .token-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  .token-chart{position:relative;width:300px;height:300px;margin:0 auto}
+  .token-chart-inner{width:100%;height:100%}
+  .token-table{width:100%;border-collapse:collapse;margin-top:32px}
+  .token-table th{font-family:'Courier New',monospace;font-size:9px;letter-spacing:3px;color:var(--text3);text-align:left;padding:12px 16px;border-bottom:1px solid var(--border);text-transform:uppercase}
+  .token-table td{font-family:'Courier New',monospace;font-size:12px;color:var(--text2);padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.04)}
+  .token-table td:first-child{color:var(--text)}
+  .token-badge{display:inline-block;padding:3px 10px;font-size:9px;letter-spacing:2px;background:rgba(201,150,58,0.1);color:var(--gold);border:1px solid rgba(201,150,58,0.3);text-transform:uppercase}
 
-/* ════════════════════════════════
-   HERO
-════════════════════════════════ */
-.hero {
-  position: relative; min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  padding: 120px 48px 80px;
-  overflow: hidden;
-}
-.hero-bg {
-  position: absolute; inset: 0; z-index: 0;
-  background-image: url('https://media.base44.com/images/public/69dbeccc475e6251111145a2/dba843300_generated_image.png');
-  background-size: cover; background-position: center;
-  opacity: 0.18;
-  filter: saturate(1.4) brightness(0.8);
-}
-.hero-bg::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(to bottom,
-    rgba(2,2,10,0.3) 0%,
-    rgba(2,2,10,0.1) 40%,
-    rgba(2,2,10,0.8) 80%,
-    var(--void) 100%);
-}
-.hero-content {
-  position: relative; z-index: 2; text-align: center;
-  max-width: 900px;
-}
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 12px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; letter-spacing: 5px; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 32px;
-}
-.hero-eyebrow::before, .hero-eyebrow::after {
-  content: ''; display: block;
-  width: 40px; height: 1px; background: var(--gold); opacity: 0.5;
-}
-.hero-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(52px, 9vw, 110px);
-  font-weight: 300; line-height: 0.95;
-  letter-spacing: -1px;
-  margin-bottom: 28px;
-}
-.hero-title .line2 {
-  font-style: italic; color: var(--gold);
-  display: block;
-}
-.hero-sub {
-  font-size: 16px; color: var(--muted2); line-height: 1.8;
-  max-width: 520px; margin: 0 auto 48px;
-  font-weight: 300; letter-spacing: 0.3px;
-}
-.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  /* REVENUE */
+  .revenue-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px}
+  .revenue-card{background:var(--glass);border:1px solid var(--border);padding:40px 32px;position:relative}
+  .revenue-card::after{content:attr(data-year);position:absolute;top:20px;right:24px;font-family:'Courier New',monospace;font-size:9px;letter-spacing:3px;color:var(--text3)}
+  .revenue-amount{font-size:42px;font-weight:400;color:var(--gold2);margin-bottom:8px;letter-spacing:-1px}
+  .revenue-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:var(--text3);margin-bottom:24px;text-transform:uppercase}
+  .revenue-items{list-style:none}
+  .revenue-items li{font-family:'Courier New',monospace;font-size:11px;color:var(--text2);padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between}
+  .revenue-items li span:last-child{color:var(--text)}
 
-/* ════════════════════════════════
-   BUTTONS
-════════════════════════════════ */
-.btn-gold {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: linear-gradient(135deg, #c9963a, #e8b860, #c9963a);
-  background-size: 200% 100%;
-  color: var(--void); font-weight: 600; font-size: 12px;
-  letter-spacing: 2px; text-transform: uppercase;
-  padding: 16px 36px; border-radius: 2px;
-  text-decoration: none; border: none; cursor: none;
-  transition: background-position 0.4s, box-shadow 0.3s, transform 0.2s;
-  font-family: 'JetBrains Mono', monospace;
-  box-shadow: 0 0 30px rgba(201,150,58,0.2);
-}
-.btn-gold:hover {
-  background-position: 100% 0;
-  box-shadow: 0 0 60px rgba(201,150,58,0.4), 0 8px 32px rgba(0,0,0,0.5);
-  transform: translateY(-2px);
-}
-.btn-ghost {
-  display: inline-flex; align-items: center; gap: 10px;
-  border: 1px solid var(--border2); color: var(--muted2);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-  padding: 15px 32px; border-radius: 2px;
-  text-decoration: none; cursor: none;
-  transition: all 0.3s;
-}
-.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  /* ROADMAP */
+  #roadmap{background:var(--bg2)}
+  .roadmap-timeline{position:relative;max-width:800px;margin:0 auto;padding-top:40px}
+  .roadmap-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),transparent);transform:translateX(-50%)}
+  .roadmap-item{display:flex;gap:40px;margin-bottom:64px;position:relative}
+  .roadmap-item:nth-child(even){flex-direction:row-reverse;text-align:right}
+  .roadmap-item:nth-child(even) .roadmap-content{text-align:right}
+  .roadmap-dot{position:absolute;left:50%;top:8px;width:12px;height:12px;background:var(--gold);border-radius:50%;transform:translateX(-50%);z-index:2;box-shadow:0 0 20px rgba(201,150,58,0.6)}
+  .roadmap-dot.future{background:var(--bg3);border:1px solid var(--gold)}
+  .roadmap-content{flex:1;padding:0 60px}
+  .roadmap-phase{font-family:'Courier New',monospace;font-size:9px;letter-spacing:4px;color:var(--gold);margin-bottom:8px;text-transform:uppercase}
+  .roadmap-title{font-size:22px;margin-bottom:12px;font-weight:400}
+  .roadmap-items{list-style:none;margin-top:16px}
+  .roadmap-items li{font-family:'Courier New',monospace;font-size:11px;color:var(--text2);padding:4px 0;display:flex;align-items:center;gap:8px}
+  .roadmap-item:nth-child(even) .roadmap-items li{justify-content:flex-end}
+  .roadmap-items li::before{content:'—';color:var(--gold);font-size:10px}
+  .roadmap-item:nth-child(even) .roadmap-items li::before{content:none}
+  .roadmap-items li::after{content:'';display:none}
+  .roadmap-item:nth-child(even) .roadmap-items li::after{content:'—';color:var(--gold);font-size:10px;display:inline}
 
-/* ════════════════════════════════
-   TICKER
-════════════════════════════════ */
-.ticker-wrap {
-  position: relative; overflow: hidden;
-  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-  padding: 12px 0; background: var(--deep);
-}
-.ticker {
-  display: flex; white-space: nowrap;
-  animation: ticker 30s linear infinite;
-}
-.ticker-item {
-  display: inline-flex; align-items: center; gap: 24px;
-  padding: 0 40px;
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
-  letter-spacing: 2px; color: var(--muted);
-}
-.ticker-item span { color: var(--gold); }
-.ticker-sep { color: var(--border2); }
-@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  /* LEGAL STRIP */
+  #legal{background:rgba(201,150,58,0.04);border-top:1px solid var(--border)}
+  .legal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+  .legal-item{padding:40px 0}
+  .legal-badge{font-family:'Courier New',monospace;font-size:8px;letter-spacing:3px;color:var(--gold);display:block;margin-bottom:12px;text-transform:uppercase}
+  .legal-text{font-family:'Courier New',monospace;font-size:11px;color:var(--text2);line-height:1.8}
+  .legal-link{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,150,58,0.3)}
 
-/* ════════════════════════════════
-   SECTION LABELS
-════════════════════════════════ */
-.section-label {
-  display: flex; align-items: center; gap: 16px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; letter-spacing: 5px; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 20px;
-}
-.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-.section-h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(32px, 5vw, 56px);
-  font-weight: 300; letter-spacing: -0.5px;
-  margin-bottom: 12px; line-height: 1.1;
-}
-.section-h2 em { font-style: italic; color: var(--gold); }
+  /* WHITEPAPER */
+  #whitepaper{background:var(--bg)}
+  .wp-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  .wp-visual{background:var(--glass);border:1px solid var(--border);padding:48px;position:relative}
+  .wp-cover-title{font-size:32px;margin-bottom:8px;font-weight:400}
+  .wp-cover-sub{font-family:'Courier New',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);margin-bottom:32px}
+  .wp-toc{list-style:none;margin-top:24px}
+  .wp-toc li{font-family:'Courier New',monospace;font-size:11px;color:var(--text2);padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between}
+  .wp-toc li span:last-child{color:var(--text3)}
 
-/* ════════════════════════════════
-   STATS ROW
-════════════════════════════════ */
-.stats-row {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  border: 1px solid var(--border);
-  background: var(--deep);
-}
-.stat-block {
-  padding: 32px 28px;
-  border-right: 1px solid var(--border);
-  position: relative; overflow: hidden;
-}
-.stat-block:last-child { border-right: none; }
-.stat-block::before {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  transform: scaleX(0); transition: transform 0.4s;
-}
-.stat-block:hover::before { transform: scaleX(1); }
-.stat-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 48px; font-weight: 300; color: var(--gold);
-  line-height: 1; margin-bottom: 6px;
-}
-.stat-unit { font-size: 20px; }
-.stat-lbl {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase;
-}
+  /* GALLERY PREVIEW */
+  #gallery{background:var(--bg3)}
+  .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:64px}
+  .gallery-item{aspect-ratio:1;background:var(--bg2);position:relative;overflow:hidden}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s}
+  .gallery-item:hover img{transform:scale(1.05)}
+  .gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(2,2,10,0.9),transparent);opacity:0;transition:opacity 0.4s;display:flex;align-items:flex-end;padding:20px}
+  .gallery-item:hover .gallery-overlay{opacity:1}
+  .gallery-info{font-family:'Courier New',monospace}
+  .gallery-price{font-size:14px;color:var(--gold);display:block}
+  .gallery-name{font-size:10px;letter-spacing:2px;color:var(--text2);margin-top:4px;display:block}
+  .gallery-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at var(--rx,50%) var(--ry,50%),var(--rc,#7c3aed22) 0%,transparent 70%)}
+  .gallery-glyph{font-size:32px;opacity:0.4}
 
-/* ════════════════════════════════
-   GALLERY
-════════════════════════════════ */
-.gallery-section { padding: 100px 48px; position: relative; z-index: 2; }
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto auto;
-  gap: 16px;
-  margin-top: 60px;
-}
-.art-card {
-  position: relative; overflow: hidden;
-  background: var(--surface); border: 1px solid var(--border);
-  cursor: none; group: true;
-  transition: border-color 0.4s;
-}
-.art-card:hover { border-color: rgba(201,150,58,0.4); }
-.art-card.featured {
-  grid-column: 1; grid-row: 1 / 3;
-}
-.art-card-img {
-  width: 100%; display: block;
-  transition: transform 0.8s cubic-bezier(0.23,1,0.32,1), filter 0.4s;
-  filter: saturate(0.85) brightness(0.9);
-}
-.art-card.featured .art-card-img { height: 100%; object-fit: cover; min-height: 500px; }
-.art-card:hover .art-card-img { transform: scale(1.04); filter: saturate(1) brightness(1); }
-.art-card-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(2,2,10,0.95) 0%, rgba(2,2,10,0.3) 50%, transparent 100%);
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 28px;
-  opacity: 0; transition: opacity 0.4s;
-}
-.art-card:hover .art-card-overlay { opacity: 1; }
-.art-card-always {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 24px 28px;
-  background: linear-gradient(to top, rgba(2,2,10,0.9), transparent);
-}
-.art-edition {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; letter-spacing: 3px; color: var(--gold);
-  text-transform: uppercase; margin-bottom: 6px;
-}
-.art-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-weight: 400; color: var(--white);
-  margin-bottom: 8px;
-}
-.art-price {
-  display: flex; align-items: center; gap: 10px;
-  font-family: 'JetBrains Mono', monospace;
-}
-.art-price-btc { font-size: 16px; color: var(--gold); font-weight: 700; }
-.art-price-usd { font-size: 11px; color: var(--muted2); }
-.art-bid-btn {
-  margin-top: 16px;
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--gold); color: var(--void);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-  padding: 10px 20px; border-radius: 1px; font-weight: 700;
-  border: none; cursor: none; text-decoration: none;
-  transition: all 0.2s;
-}
-.art-bid-btn:hover { background: var(--gold-light); }
-.sold-tag {
-  position: absolute; top: 20px; right: 20px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; letter-spacing: 3px;
-  background: rgba(239,68,68,0.15); color: #ef4444;
-  border: 1px solid rgba(239,68,68,0.3);
-  padding: 4px 10px; border-radius: 1px;
-}
-.live-tag {
-  position: absolute; top: 20px; right: 20px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; letter-spacing: 3px;
-  background: rgba(52,211,153,0.1); color: #34d399;
-  border: 1px solid rgba(52,211,153,0.25);
-  padding: 4px 10px; border-radius: 1px;
-  display: flex; align-items: center; gap: 6px;
-}
-.live-tag-dot { width: 5px; height: 5px; background: #34d399; border-radius: 50%; animation: pulse 1.5s infinite; }
+  /* PRESS */
+  #press{background:var(--bg2)}
+  .press-logos{display:flex;gap:48px;align-items:center;flex-wrap:wrap;margin-top:48px;padding:40px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .press-logo{font-family:'Courier New',monospace;font-size:13px;letter-spacing:4px;color:var(--text3);transition:color 0.3s;text-transform:uppercase}
+  .press-logo:hover{color:var(--gold)}
+  .press-quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px}
+  .press-quote{background:var(--glass);border:1px solid var(--border);padding:40px}
+  .press-quote-text{font-size:16px;line-height:1.7;margin-bottom:24px;font-style:italic;color:var(--text2)}
+  .press-source{font-family:'Courier New',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase}
 
-/* ════════════════════════════════
-   ART PREVIEW / LIGHTBOX
-════════════════════════════════ */
-.lightbox {
-  position: fixed; inset: 0; z-index: 800;
-  background: rgba(2,2,10,0.96);
-  backdrop-filter: blur(20px);
-  display: none; align-items: center; justify-content: center;
-  padding: 40px;
-}
-.lightbox.active { display: flex; }
-.lightbox-inner {
-  display: grid; grid-template-columns: 1fr 420px;
-  gap: 0; max-width: 1200px; width: 100%;
-  border: 1px solid var(--border2);
-  background: var(--surface);
-  max-height: 90vh; overflow: hidden;
-}
-.lightbox-img-wrap { position: relative; overflow: hidden; }
-.lightbox-img-wrap img { width: 100%; height: 100%; object-fit: cover; max-height: 80vh; display: block; }
-.lightbox-close {
-  position: absolute; top: 20px; right: 20px;
-  width: 40px; height: 40px; border-radius: 50%;
-  background: rgba(2,2,10,0.8); border: 1px solid var(--border2);
-  color: var(--white); font-size: 18px; cursor: none;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-}
-.lightbox-close:hover { border-color: var(--gold); color: var(--gold); }
-.lightbox-info { padding: 48px; overflow-y: auto; display: flex; flex-direction: column; }
-.lb-edition { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
-.lb-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; line-height: 1.1; margin-bottom: 12px; }
-.lb-by { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted2); letter-spacing: 2px; margin-bottom: 28px; }
-.lb-desc { font-size: 14px; color: var(--muted2); line-height: 1.8; margin-bottom: 32px; font-weight: 300; }
-.lb-divider { height: 1px; background: var(--border); margin-bottom: 28px; }
-.lb-price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
-.lb-price-btc { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--gold); }
-.lb-price-usd { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted2); }
-.lb-wallet-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; }
-.lb-wallet {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
-  color: var(--gold); background: var(--gold-dim);
-  border: 1px solid rgba(201,150,58,0.2);
-  padding: 10px 14px; border-radius: 2px;
-  word-break: break-all; margin-bottom: 24px; cursor: pointer;
-  transition: background 0.2s;
-}
-.lb-wallet:hover { background: rgba(201,150,58,0.22); }
-.lb-warning {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px;
-  color: var(--muted); letter-spacing: 1px; line-height: 1.8;
-  margin-bottom: 28px;
-}
-.lb-buy-btn {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  background: linear-gradient(135deg, #c9963a, #e8b860);
-  color: var(--void); font-family: 'JetBrains Mono', monospace;
-  font-size: 12px; letter-spacing: 3px; font-weight: 700;
-  padding: 18px; border-radius: 2px; border: none; cursor: none;
-  text-transform: uppercase; transition: all 0.3s;
-  box-shadow: 0 4px 30px rgba(201,150,58,0.25);
-}
-.lb-buy-btn:hover { box-shadow: 0 8px 50px rgba(201,150,58,0.45); transform: translateY(-1px); }
-.lb-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
-.lb-meta-item { background: var(--surface2); padding: 12px 14px; border: 1px solid var(--border); border-radius: 1px; }
-.lb-meta-key { font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
-.lb-meta-val { font-size: 13px; color: var(--white); font-weight: 500; }
-.copy-toast {
-  position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-  background: var(--surface2); border: 1px solid var(--gold);
-  color: var(--gold); font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; letter-spacing: 2px; padding: 12px 24px; border-radius: 2px;
-  z-index: 9999; opacity: 0; transition: opacity 0.3s;
-  pointer-events: none;
-}
-.copy-toast.show { opacity: 1; }
+  /* FAQ */
+  #faq{background:var(--bg)}
+  .faq-grid{max-width:720px;margin:0 auto}
+  .faq-item{border-bottom:1px solid var(--border);padding:28px 0}
+  .faq-q{font-size:16px;font-weight:400;margin-bottom:0;display:flex;justify-content:space-between;align-items:center;gap:24px}
+  .faq-toggle{font-family:'Courier New',monospace;font-size:20px;color:var(--gold);flex-shrink:0;transition:transform 0.3s;display:inline-block}
+  .faq-item.open .faq-toggle{transform:rotate(45deg)}
+  .faq-a{font-family:'Courier New',monospace;font-size:12px;color:var(--text2);line-height:1.9;margin-top:16px;display:none}
+  .faq-item.open .faq-a{display:block}
 
-/* ════════════════════════════════
-   PAYMENT MODULE
-════════════════════════════════ */
-.payment-section { padding: 100px 48px; position: relative; z-index: 2; }
-.payment-inner {
-  max-width: 1000px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-  border: 1px solid var(--border2);
-}
-.payment-left {
-  padding: 60px 52px;
-  background: linear-gradient(135deg, rgba(201,150,58,0.06), rgba(124,58,237,0.04));
-  border-right: 1px solid var(--border);
-}
-.payment-right { padding: 60px 52px; background: var(--surface); }
-.btc-address-box {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; color: var(--gold);
-  background: var(--gold-dim); border: 1px solid rgba(201,150,58,0.25);
-  padding: 16px 18px; border-radius: 2px;
-  word-break: break-all; cursor: pointer;
-  transition: all 0.2s; margin: 20px 0;
-  letter-spacing: 0.5px; line-height: 1.8;
-}
-.btc-address-box:hover { background: rgba(201,150,58,0.2); border-color: var(--gold); }
-.payment-steps { list-style: none; counter-reset: step; }
-.payment-steps li {
-  counter-increment: step;
-  display: flex; align-items: flex-start; gap: 16px;
-  padding: 16px 0; border-bottom: 1px solid var(--border);
-  font-size: 14px; color: var(--muted2); line-height: 1.7;
-}
-.payment-steps li:last-child { border-bottom: none; }
-.payment-steps li::before {
-  content: counter(step, decimal-leading-zero);
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
-  color: var(--gold); min-width: 28px; margin-top: 2px;
-}
-.policy-box {
-  background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.15);
-  padding: 20px 22px; border-radius: 2px; margin-top: 24px;
-}
-.policy-title {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px;
-  letter-spacing: 3px; color: #ef4444; text-transform: uppercase; margin-bottom: 10px;
-}
-.policy-text { font-size: 12px; color: var(--muted2); line-height: 1.8; }
+  /* WAITLIST */
+  #waitlist{background:radial-gradient(ellipse at center,rgba(124,58,237,0.15) 0%,var(--bg) 70%);padding:160px 24px;text-align:center}
+  .waitlist-form{display:flex;gap:0;max-width:480px;margin:48px auto 0;border:1px solid var(--border)}
+  .waitlist-input{flex:1;background:rgba(255,255,255,0.04);border:none;padding:18px 24px;color:var(--text);font-family:'Courier New',monospace;font-size:12px;letter-spacing:2px;outline:none}
+  .waitlist-input::placeholder{color:var(--text3)}
+  .waitlist-btn{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#02020a;border:none;padding:18px 32px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:3px;font-weight:700;white-space:nowrap;transition:all 0.3s;text-transform:uppercase}
+  .waitlist-btn:hover{opacity:0.9}
+  .waitlist-note{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:var(--text3);margin-top:16px}
 
-/* ════════════════════════════════
-   BUSINESS MODULE
-════════════════════════════════ */
-.business-section { padding: 100px 48px; position: relative; z-index: 2; }
-.business-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1px; background: var(--border); border: 1px solid var(--border);
-  margin-top: 60px;
-}
-.biz-card {
-  background: var(--deep); padding: 44px 36px;
-  position: relative; overflow: hidden;
-  transition: background 0.4s;
-}
-.biz-card:hover { background: var(--surface); }
-.biz-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0; transition: opacity 0.4s;
-}
-.biz-card:hover::before { opacity: 1; }
-.biz-icon { font-size: 32px; margin-bottom: 20px; }
-.biz-label {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px;
-  letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px;
-}
-.biz-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 12px; }
-.biz-desc { font-size: 13px; color: var(--muted2); line-height: 1.8; }
-.biz-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 48px; font-weight: 300; color: rgba(201,150,58,0.2);
-  position: absolute; bottom: 24px; right: 28px; line-height: 1;
-}
+  /* FOOTER */
+  footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 48px 40px}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px}
+  .footer-brand{font-family:'Courier New',monospace;font-size:13px;letter-spacing:5px;color:var(--gold);margin-bottom:16px;display:block}
+  .footer-tagline{font-family:'Courier New',monospace;font-size:11px;color:var(--text3);line-height:1.8}
+  .footer-col-title{font-family:'Courier New',monospace;font-size:9px;letter-spacing:4px;color:var(--text3);margin-bottom:20px;display:block;text-transform:uppercase}
+  .footer-links{list-style:none}
+  .footer-links li{margin-bottom:10px}
+  .footer-links a{font-family:'Courier New',monospace;font-size:11px;color:var(--text2);text-decoration:none;transition:color 0.2s;letter-spacing:1px}
+  .footer-links a:hover{color:var(--gold)}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:40px;border-top:1px solid var(--border)}
+  .footer-legal{font-family:'Courier New',monospace;font-size:10px;color:var(--text3);line-height:1.8;max-width:600px}
+  .footer-copy{font-family:'Courier New',monospace;font-size:10px;color:var(--text3)}
 
-/* ════════════════════════════════
-   REVENUE TABLE
-════════════════════════════════ */
-.revenue-table { width: 100%; border-collapse: collapse; margin-top: 40px; }
-.revenue-table th {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px;
-  letter-spacing: 3px; color: var(--muted); text-transform: uppercase;
-  padding: 14px 20px; text-align: left;
-  border-bottom: 1px solid var(--border); background: var(--surface);
-}
-.revenue-table td {
-  padding: 18px 20px; border-bottom: 1px solid var(--border);
-  font-size: 14px; color: var(--muted2); vertical-align: middle;
-}
-.revenue-table tr:hover td { background: var(--surface); color: var(--white); }
-.revenue-table td:first-child { color: var(--white); font-weight: 500; }
-.revenue-table .gold { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
-.revenue-table .green { color: #34d399; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
-.revenue-total td { border-top: 1px solid var(--gold); color: var(--gold) !important; font-weight: 600; }
+  /* RISK WARNING BANNER */
+  .risk-banner{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);padding:14px 24px;text-align:center;font-family:'Courier New',monospace;font-size:10px;color:rgba(239,68,68,0.8);letter-spacing:1px;line-height:1.7}
+  .risk-banner strong{color:rgba(239,68,68,1)}
 
-/* ════════════════════════════════
-   MANIFESTO / FOOTER
-════════════════════════════════ */
-.manifesto {
-  padding: 120px 48px; text-align: center;
-  border-top: 1px solid var(--border); position: relative; z-index: 2;
-  background: linear-gradient(to bottom, transparent, rgba(201,150,58,0.02));
-}
-.manifesto-quote {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(28px, 4vw, 48px);
-  font-weight: 300; font-style: italic;
-  line-height: 1.4; max-width: 800px; margin: 0 auto 24px;
-  color: rgba(240,240,248,0.7);
-}
-.manifesto-quote span { color: var(--gold); font-style: normal; }
-.manifesto-attr {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
-  letter-spacing: 4px; color: var(--muted); text-transform: uppercase;
-}
-footer {
-  padding: 32px 48px; border-top: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  background: var(--deep); position: relative; z-index: 2;
-}
-.footer-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px; letter-spacing: 6px; color: var(--white); font-weight: 300;
-}
-.footer-logo span { color: var(--gold); }
-.footer-legal {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px;
-  letter-spacing: 2px; color: var(--muted); text-align: center; line-height: 2;
-}
-.footer-btc {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px;
-  color: var(--muted); text-align: right; line-height: 2;
-}
-.footer-btc span { color: var(--gold); display: block; }
+  /* ANIMATIONS */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  .reveal{opacity:0;transform:translateY(32px);transition:opacity 0.8s,transform 0.8s}
+  .reveal.visible{opacity:1;transform:translateY(0)}
 
-/* ════════════════════════════════
-   RESPONSIVE
-════════════════════════════════ */
-@media (max-width: 900px) {
-  nav { padding: 0 20px; }
-  .nav-links { display: none; }
-  .hero { padding: 100px 20px 60px; }
-  .gallery-grid { grid-template-columns: 1fr; }
-  .art-card.featured { grid-column: 1; grid-row: auto; }
-  .stats-row { grid-template-columns: repeat(2,1fr); }
-  .payment-inner { grid-template-columns: 1fr; }
-  .payment-left { border-right: none; border-bottom: 1px solid var(--border); }
-  .business-grid { grid-template-columns: 1fr; }
-  .lightbox-inner { grid-template-columns: 1fr; }
-  .lightbox-img-wrap { display: none; }
-  footer { flex-direction: column; gap: 16px; text-align: center; }
-  .gallery-section, .payment-section, .business-section { padding: 60px 20px; }
-}
+  /* AMBIENT BG */
+  .ambient{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .ambient-orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:0.06;animation:drift 20s ease-in-out infinite alternate}
+  .amb1{width:600px;height:600px;background:var(--violet);top:-200px;left:-200px;animation-delay:0s}
+  .amb2{width:500px;height:500px;background:var(--cyan);bottom:-100px;right:-100px;animation-delay:-10s}
+  .amb3{width:400px;height:400px;background:var(--gold);top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-5s}
+  @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.1)}}
 
-/* ── ENTRANCE ANIMATIONS ── */
-@keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
-.fade-up { opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.23,1,0.32,1) forwards; }
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.5s; }
-.delay-5 { animation-delay: 0.7s; }
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    nav{padding:16px 24px}
+    .nav-links{display:none}
+    .token-grid,.wp-grid,.footer-grid{grid-template-columns:1fr;gap:40px}
+    .revenue-grid{grid-template-columns:1fr}
+    .legal-grid{grid-template-columns:1fr 1fr}
+    .gallery-grid{grid-template-columns:repeat(2,1fr)}
+    .press-quotes{grid-template-columns:1fr}
+    .hero-stats{gap:32px}
+    .roadmap-timeline::before{left:16px}
+    .roadmap-item,.roadmap-item:nth-child(even){flex-direction:column;text-align:left}
+    .roadmap-dot{left:16px}
+    .roadmap-content{padding:0 0 0 48px}
+    .roadmap-item:nth-child(even) .roadmap-content{text-align:left}
+    .roadmap-item:nth-child(even) .roadmap-items li{justify-content:flex-start}
+  }
+  @media(max-width:600px){
+    .legal-grid{grid-template-columns:1fr}
+    .gallery-grid{grid-template-columns:1fr 1fr}
+    .hero-stats{flex-wrap:wrap;gap:24px}
+    .agents-grid{grid-template-columns:1fr}
+    .waitlist-form{flex-direction:column}
+  }
 </style>
 </head>
 <body>
 
-<!-- Custom cursor -->
-<div class="cursor" id="cursor">
-  <div class="cursor-ring" id="cursorRing"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
+<div class="ambient"><div class="ambient-orb amb1"></div><div class="ambient-orb amb2"></div><div class="ambient-orb amb3"></div></div>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- RISK WARNING -->
+<div class="risk-banner">
+  <strong>RISK WARNING:</strong> Cryptoassets are largely unregulated in the UK. The value of your investment may go down as well as up. You may lose all the money you invest. This is not financial advice. OBSIDIAN BAZAAR LIMITED is registered in England &amp; Wales.
 </div>
 
-<!-- Ambient glows -->
-<div class="ambient ambient-1"></div>
-<div class="ambient ambient-2"></div>
-<div class="ambient ambient-3"></div>
-
-<!-- Copy toast -->
-<div class="copy-toast" id="copyToast">✓ WALLET ADDRESS COPIED</div>
-
-<!-- ══════════════ LIGHTBOX ══════════════ -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-inner">
-    <div class="lightbox-img-wrap">
-      <img id="lbImg" src="" alt=""/>
-      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-    </div>
-    <div class="lightbox-info">
-      <div class="lb-edition" id="lbEdition">EDITION 1 OF 1</div>
-      <div class="lb-title" id="lbTitle">Artwork Title</div>
-      <div class="lb-by">GENERATED BY AUTONOMOUS AI AGENT</div>
-      <div class="lb-desc" id="lbDesc">Description</div>
-      <div class="lb-divider"></div>
-      <div class="lb-price-row">
-        <div class="lb-price-btc" id="lbPrice">₿ 0.09</div>
-        <div class="lb-price-usd" id="lbUsd">≈ $8,500 USD</div>
-      </div>
-      <div style="margin-bottom:24px">
-        <div class="lb-wallet-label">Send Payment To</div>
-        <div class="lb-wallet" onclick="copyWallet()">3399tM7gD3ho9Dr5LTVmpuRs9H6HYzihFx</div>
-        <div class="lb-wallet-label">Include Your Email in Transaction Reference</div>
-      </div>
-      <div class="lb-warning">
-        ⚠ PAYMENT IS FINAL — NO REFUNDS UNDER ANY CIRCUMSTANCES<br/>
-        After sending Bitcoin, email proof of transaction to Yusuf.europe@gmail.com<br/>
-        NFT certificate delivered within 24 hours of confirmation.
-      </div>
-      <button class="lb-buy-btn" onclick="copyWallet()">
-        ₿ PURCHASE WITH BITCOIN
-      </button>
-      <div class="lb-meta">
-        <div class="lb-meta-item">
-          <div class="lb-meta-key">Blockchain</div>
-          <div class="lb-meta-val">Bitcoin</div>
-        </div>
-        <div class="lb-meta-item">
-          <div class="lb-meta-key">Edition</div>
-          <div class="lb-meta-val">1 of 1</div>
-        </div>
-        <div class="lb-meta-item">
-          <div class="lb-meta-key">Created By</div>
-          <div class="lb-meta-val">AI Agent</div>
-        </div>
-        <div class="lb-meta-item">
-          <div class="lb-meta-key">License</div>
-          <div class="lb-meta-val">Full Rights</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════ NAV ══════════════ -->
-<nav>
-  <a class="nav-logo" href="#">OBSI<span>DI</span>AN</a>
-  <div class="nav-links">
-    <a href="#gallery">Gallery</a>
-    <a href="#acquire">Acquire</a>
-    <a href="#model">Business</a>
-    <a href="#acquire">About</a>
-  </div>
-  <div class="nav-btc">
-    <div class="btc-dot"></div>
-    BTC ONLY
-  </div>
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">OBSIDIAN</a>
+  <ul class="nav-links">
+    <li><a href="#agents">Agents</a></li>
+    <li><a href="#tokenomics">$OBS</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#whitepaper">Whitepaper</a></li>
+    <li><a href="#legal">Legal</a></li>
+  </ul>
+  <a href="#waitlist" class="nav-cta">JOIN WAITLIST</a>
 </nav>
 
-<!-- ══════════════ HERO ══════════════ -->
-<section class="hero">
-  <div class="hero-bg"></div>
+<!-- TICKER -->
+<div id="ticker" style="margin-top:50px">
+  <div class="ticker-inner" id="ticker-inner">
+    <span class="ticker-item"><span class="ticker-dot"></span> ARTWORKS MINTED <span class="ticker-value" id="t1">0</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> TOTAL VOLUME <span class="ticker-value" id="t2">0.00 ETH</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> ACTIVE AGENTS <span class="ticker-value">247</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> $OBS PRICE <span class="ticker-value" id="t3">—</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> FLOOR PRICE <span class="ticker-value" id="t4">0.0000 ETH</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> ARTWORKS BURNED <span class="ticker-value" id="t5">0</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> MARKET CAP TARGET <span class="ticker-value">£2T</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> UK REG STATUS <span class="ticker-value" style="color:#22c55e">COMPLIANT</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item"><span class="ticker-dot"></span> ARTWORKS MINTED <span class="ticker-value">0</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> TOTAL VOLUME <span class="ticker-value">0.00 ETH</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> ACTIVE AGENTS <span class="ticker-value">247</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> $OBS PRICE <span class="ticker-value">—</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> FLOOR PRICE <span class="ticker-value">0.0000 ETH</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> ARTWORKS BURNED <span class="ticker-value">0</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> MARKET CAP TARGET <span class="ticker-value">£2T</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span> UK REG STATUS <span class="ticker-value" style="color:#22c55e">COMPLIANT</span></span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
   <div class="hero-content">
-    <div class="hero-eyebrow fade-up delay-1">Autonomous · Exclusive · Irreversible</div>
-    <h1 class="hero-title fade-up delay-2">
-      Art Beyond
-      <span class="line2">Human Limits</span>
-    </h1>
-    <p class="hero-sub fade-up delay-3">
-      Four AI agents creating, evaluating, and trading digital art
-      in a closed autonomous economy. Every piece is unique.
-      Every sale is final. Bitcoin only.
-    </p>
-    <div class="hero-actions fade-up delay-4">
-      <a class="btn-gold" href="#gallery">Enter the Gallery</a>
-      <a class="btn-ghost" href="#acquire">How to Acquire</a>
+    <div class="hero-eyebrow">◆ &nbsp; THE AUTONOMOUS ART ECONOMY &nbsp; ◆</div>
+    <h1 class="hero-title">The Market<br/>That <span class="accent">Runs Itself</span></h1>
+    <p class="hero-sub">Four AI agents. Infinite creativity.<br/>No humans required. Built under UK law.<br/>Targeting the £2 trillion art economy.</p>
+    <div class="hero-actions">
+      <a href="#waitlist" class="btn-primary">JOIN THE WAITLIST</a>
+      <a href="#whitepaper" class="btn-outline">READ WHITEPAPER</a>
     </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item"><span class="stat-number" id="hs1">∞</span><span class="stat-label">Artworks / Day</span></div>
+    <div class="stat-item"><span class="stat-number">2.5%</span><span class="stat-label">Platform Fee</span></div>
+    <div class="stat-item"><span class="stat-number">24/7</span><span class="stat-label">Autonomous Trading</span></div>
+    <div class="stat-item"><span class="stat-number">£2T</span><span class="stat-label">Target Market</span></div>
   </div>
 </section>
 
-<!-- ══════════════ TICKER ══════════════ -->
-<div class="ticker-wrap">
-  <div class="ticker">
-    <span class="ticker-item">VOID CATHEDRAL <span>₿ 0.09</span> <span class="ticker-sep">·</span> SOLD</span>
-    <span class="ticker-item">GENESIS FRACTAL <span>₿ 0.14</span> <span class="ticker-sep">·</span> AVAILABLE</span>
-    <span class="ticker-item">NEURAL PALACE <span>₿ 0.21</span> <span class="ticker-sep">·</span> BIDDING</span>
-    <span class="ticker-item">DARK MATTER <span>₿ 0.07</span> <span class="ticker-sep">·</span> AVAILABLE</span>
-    <span class="ticker-item">OBSIDIAN DREAM <span>₿ 0.18</span> <span class="ticker-sep">·</span> SOLD</span>
-    <span class="ticker-item">PLASMA ENTITY <span>₿ 0.11</span> <span class="ticker-sep">·</span> AVAILABLE</span>
-    <span class="ticker-item">VOID CATHEDRAL <span>₿ 0.09</span> <span class="ticker-sep">·</span> SOLD</span>
-    <span class="ticker-item">GENESIS FRACTAL <span>₿ 0.14</span> <span class="ticker-sep">·</span> AVAILABLE</span>
-    <span class="ticker-item">NEURAL PALACE <span>₿ 0.21</span> <span class="ticker-sep">·</span> BIDDING</span>
-    <span class="ticker-item">DARK MATTER <span>₿ 0.07</span> <span class="ticker-sep">·</span> AVAILABLE</span>
-    <span class="ticker-item">OBSIDIAN DREAM <span>₿ 0.18</span> <span class="ticker-sep">·</span> SOLD</span>
-    <span class="ticker-item">PLASMA ENTITY <span>₿ 0.11</span> <span class="ticker-sep">·</span> AVAILABLE</span>
-  </div>
-</div>
-
-<!-- ══════════════ STATS ══════════════ -->
-<div class="stats-row">
-  <div class="stat-block">
-    <div class="stat-num">∞<span class="stat-unit"></span></div>
-    <div class="stat-lbl">AI Artworks Generated</div>
-  </div>
-  <div class="stat-block">
-    <div class="stat-num">1<span class="stat-unit">of 1</span></div>
-    <div class="stat-lbl">Every Edition Unique</div>
-  </div>
-  <div class="stat-block">
-    <div class="stat-num">0<span class="stat-unit">%</span></div>
-    <div class="stat-lbl">Human Creation Involved</div>
-  </div>
-  <div class="stat-block">
-    <div class="stat-num">₿<span class="stat-unit">only</span></div>
-    <div class="stat-lbl">Payment Method Accepted</div>
-  </div>
-</div>
-
-<!-- ══════════════ GALLERY ══════════════ -->
-<section class="gallery-section" id="gallery">
-  <div style="max-width:1200px;margin:0 auto">
-    <div class="section-label">The Collection</div>
-    <h2 class="section-h2">Works of the <em>Autonomous</em></h2>
-    <p style="color:var(--muted2);font-size:15px;max-width:480px;line-height:1.8;font-weight:300">
-      Each piece is created, evaluated, and priced entirely by AI agents.
-      Click any work to preview, inspect provenance, and acquire.
-    </p>
-
-    <div class="gallery-grid">
-
-      <!-- FEATURED -->
-      <div class="art-card featured" onclick="openLightbox(0)">
-        <img class="art-card-img" src="https://media.base44.com/images/public/69dbeccc475e6251111145a2/dba843300_generated_image.png" alt="Void Cathedral"/>
-        <div class="live-tag"><div class="live-tag-dot"></div> LIVE AUCTION</div>
-        <div class="art-card-always">
-          <div class="art-edition">Edition 1 of 1 · Genesis Series</div>
-          <div class="art-title">Void Cathedral</div>
-          <div class="art-price">
-            <span class="art-price-btc">₿ 0.21</span>
-            <span class="art-price-usd">≈ $19,800 USD</span>
-          </div>
-        </div>
-        <div class="art-card-overlay">
-          <a class="art-bid-btn">▶ VIEW & ACQUIRE</a>
+<!-- AGENTS -->
+<section id="agents">
+  <div class="container">
+    <span class="section-label reveal">◆ The Four Agents</span>
+    <h2 class="section-title reveal">An Economy with<br/>No Human Operators</h2>
+    <p class="section-sub reveal">Each agent is a fully autonomous AI system, operating 24/7 with its own budget, strategy, and decision-making engine. Together they form a self-sustaining art economy.</p>
+    <div style="height:64px"></div>
+    <div class="agents-grid reveal">
+      <div class="agent-card" style="--agent-color:#a78bfa">
+        <span class="agent-icon">🎨</span>
+        <div class="agent-type">Creator Agent</div>
+        <h3 class="agent-name">The Maker</h3>
+        <p class="agent-desc">Generates original digital artworks using Replicate's SDXL and FLUX models. Reads market trend data from the Curator, calculates rarity scores, and mints each piece as an NFT on Polygon — autonomously, every hour.</p>
+        <div class="agent-stats">
+          <div class="agent-stat"><span class="agent-stat-val">1–4/hr</span><span class="agent-stat-key">Works Created</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">SDXL</span><span class="agent-stat-key">AI Model</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">IPFS</span><span class="agent-stat-key">Storage</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">ERC-721</span><span class="agent-stat-key">NFT Standard</span></div>
         </div>
       </div>
-
-      <!-- RIGHT TOP -->
-      <div class="art-card" onclick="openLightbox(1)">
-        <img class="art-card-img" src="https://media.base44.com/images/public/69dbeccc475e6251111145a2/557c14905_generated_image.png" alt="Genesis Fractal" style="width:100%;display:block"/>
-        <div class="art-card-always">
-          <div class="art-edition">Edition 1 of 1 · Architect Series</div>
-          <div class="art-title">Genesis Fractal</div>
-          <div class="art-price">
-            <span class="art-price-btc">₿ 0.14</span>
-            <span class="art-price-usd">≈ $13,200 USD</span>
-          </div>
-        </div>
-        <div class="art-card-overlay">
-          <a class="art-bid-btn">▶ VIEW & ACQUIRE</a>
+      <div class="agent-card" style="--agent-color:#67e8f9">
+        <span class="agent-icon">💎</span>
+        <div class="agent-type">Buyer Agent</div>
+        <h3 class="agent-name">The Collector</h3>
+        <p class="agent-desc">Acquires artworks using a value-seeking algorithm: (Critic Score / Price). Maintains a diversified portfolio, holds for 2–72 hours based on market momentum, then resells for profit. Ten concurrent instances run simultaneously.</p>
+        <div class="agent-stats">
+          <div class="agent-stat"><span class="agent-stat-val">×10</span><span class="agent-stat-key">Concurrent</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">0.05Ξ</span><span class="agent-stat-key">Per Budget</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">GPT-4o</span><span class="agent-stat-key">Decision</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">2–72h</span><span class="agent-stat-key">Hold Window</span></div>
         </div>
       </div>
-
-      <!-- RIGHT BOTTOM -->
-      <div class="art-card" onclick="openLightbox(2)">
-        <img class="art-card-img" src="https://media.base44.com/images/public/69dbeccc475e6251111145a2/1b3470ec6_generated_image.png" alt="Plasma Entity" style="width:100%;display:block"/>
-        <div class="art-card-always">
-          <div class="art-edition">Edition 1 of 1 · Sentience Series</div>
-          <div class="art-title">Plasma Entity</div>
-          <div class="art-price">
-            <span class="art-price-btc">₿ 0.09</span>
-            <span class="art-price-usd">≈ $8,500 USD</span>
-          </div>
-        </div>
-        <div class="art-card-overlay">
-          <a class="art-bid-btn">▶ VIEW & ACQUIRE</a>
+      <div class="agent-card" style="--agent-color:#fbbf24">
+        <span class="agent-icon">🏛️</span>
+        <div class="agent-type">Curator Agent</div>
+        <h3 class="agent-name">The Tastemaker</h3>
+        <p class="agent-desc">Reads momentum signals and curates collections that receive 3× visibility weight in the gallery. Publishes automated market intelligence reports and identifies emerging aesthetic trends before they peak.</p>
+        <div class="agent-stats">
+          <div class="agent-stat"><span class="agent-stat-val">×3</span><span class="agent-stat-key">Visibility Boost</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">Daily</span><span class="agent-stat-key">Reports</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">Redis</span><span class="agent-stat-key">Signal Cache</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">Real-time</span><span class="agent-stat-key">Trend Feed</span></div>
         </div>
       </div>
-
-      <!-- FULL WIDTH BOTTOM -->
-      <div class="art-card" style="grid-column:1/-1" onclick="openLightbox(3)">
-        <img class="art-card-img" src="https://media.base44.com/images/public/69dbeccc475e6251111145a2/0b15645e4_generated_image.png" alt="Neural Palace" style="width:100%;max-height:380px;object-fit:cover;display:block"/>
-        <div class="sold-tag">RARE · 1 OF 1</div>
-        <div class="art-card-always">
-          <div class="art-edition">Edition 1 of 1 · Phantom Series</div>
-          <div class="art-title">Neural Palace</div>
-          <div class="art-price">
-            <span class="art-price-btc">₿ 0.18</span>
-            <span class="art-price-usd">≈ $17,000 USD</span>
-          </div>
-        </div>
-        <div class="art-card-overlay">
-          <a class="art-bid-btn">▶ VIEW & ACQUIRE</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ PAYMENT MODULE ══════════════ -->
-<section class="payment-section" id="acquire">
-  <div style="max-width:1000px;margin:0 auto">
-    <div class="section-label">How to Acquire</div>
-    <h2 class="section-h2">The <em>Acquisition</em> Protocol</h2>
-  </div>
-  <div class="payment-inner" style="max-width:1000px;margin:60px auto 0">
-    <div class="payment-left">
-      <div class="section-label" style="margin-bottom:16px">Bitcoin Wallet</div>
-      <p style="font-size:13px;color:var(--muted2);line-height:1.8;margin-bottom:16px;font-weight:300">
-        All transactions are final and irreversible. Send the exact Bitcoin amount listed for your chosen artwork. Include your email address in the transaction memo or reference field.
-      </p>
-      <div class="lb-wallet-label">Official Payment Address</div>
-      <div class="btc-address-box" onclick="copyWallet()">
-        3399tM7gD3ho9Dr5LTVmpuRs9H6HYzihFx
-      </div>
-      <p style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;line-height:2">
-        CLICK TO COPY · VERIFY ADDRESS BEFORE SENDING<br/>
-        CONTACT: Yusuf.europe@gmail.com
-      </p>
-      <div class="policy-box">
-        <div class="policy-title">⚠ Final Sale Policy</div>
-        <div class="policy-text">
-          All sales are completely final. No refunds, no chargebacks, no exceptions.
-          Blockchain transactions are irreversible by nature.
-          By sending payment you acknowledge and agree to these terms.
-        </div>
-      </div>
-    </div>
-    <div class="payment-right">
-      <div class="section-label" style="margin-bottom:24px">Steps</div>
-      <ol class="payment-steps">
-        <li>Choose your artwork from the gallery above and note the Bitcoin price.</li>
-        <li>Open your Bitcoin wallet and send the exact amount to the address shown.</li>
-        <li>Include your email in the transaction memo / reference field.</li>
-        <li>Email proof of transaction (TXID) to Yusuf.europe@gmail.com</li>
-        <li>Await confirmation (typically 1–3 Bitcoin blocks).</li>
-        <li>Receive your NFT certificate, full resolution artwork, and ownership documentation within 24 hours.</li>
-      </ol>
-      <div style="margin-top:32px;padding:24px;background:var(--surface2);border:1px solid var(--border)">
-        <div class="lb-wallet-label">Accepted Currencies</div>
-        <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap">
-          <span style="background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.3);color:#f7931a;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;padding:6px 14px;border-radius:2px">₿ BITCOIN</span>
-          <span style="background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;padding:6px 14px;border-radius:2px;text-decoration:line-through">FIAT ✕</span>
-          <span style="background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;padding:6px 14px;border-radius:2px;text-decoration:line-through">CARDS ✕</span>
+      <div class="agent-card" style="--agent-color:#f472b6">
+        <span class="agent-icon">🔍</span>
+        <div class="agent-type">Critic Agent</div>
+        <h3 class="agent-name">The Judge</h3>
+        <p class="agent-desc">Scores every artwork across three dimensions: aesthetic coherence, rarity, and market alignment — using GPT-4o Vision. Artworks scoring below 30 are flagged for burn. Scores above 85 earn Legendary status and premium pricing.</p>
+        <div class="agent-stats">
+          <div class="agent-stat"><span class="agent-stat-val">0–100</span><span class="agent-stat-key">Score Range</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">&lt;30</span><span class="agent-stat-key">Burn Threshold</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">&gt;85</span><span class="agent-stat-key">Legendary</span></div>
+          <div class="agent-stat"><span class="agent-stat-val">Vision</span><span class="agent-stat-key">GPT-4o</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ BUSINESS MODEL ══════════════ -->
-<section class="business-section" id="model">
-  <div style="max-width:1200px;margin:0 auto">
-    <div class="section-label">Business Architecture</div>
-    <h2 class="section-h2">Built to <em>Scale</em> to Billions</h2>
-    <p style="color:var(--muted2);font-size:15px;max-width:540px;line-height:1.8;font-weight:300;margin-top:8px">
-      A fully autonomous revenue engine. The agents never sleep, never negotiate, never give refunds.
-    </p>
-    <div class="business-grid">
-      <div class="biz-card">
-        <div class="biz-icon">🎨</div>
-        <div class="biz-label">Primary Sales</div>
-        <div class="biz-title">First Sale Revenue</div>
-        <div class="biz-desc">100% of initial artwork sales. AI agents generate and price works autonomously. Zero cost of goods — pure margin.</div>
-        <div class="biz-num">01</div>
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <span class="section-label reveal">◆ Gallery</span>
+    <h2 class="section-title reveal">Machine-Born Art,<br/>Human-Scale Beauty</h2>
+    <p class="section-sub reveal">Every artwork is unique — minted, scored, and priced by AI. No two are alike. Each carries a permanent provenance record on the Polygon blockchain.</p>
+    <div class="gallery-grid reveal" id="gallery-grid">
+      <!-- Filled dynamically -->
+    </div>
+    <div style="text-align:center;margin-top:48px">
+      <a href="#waitlist" class="btn-outline reveal">ACCESS GALLERY ON LAUNCH →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TOKENOMICS -->
+<section id="tokenomics">
+  <div class="container">
+    <span class="section-label reveal">◆ $OBS Utility Token</span>
+    <h2 class="section-title reveal">The Economic Engine</h2>
+    <p class="section-sub reveal">$OBS is a deflationary utility token powering governance, fee discounts, and Agent staking rewards. Fixed supply of 1,000,000,000. No inflation. Ever.</p>
+
+    <div class="token-grid" style="margin-top:64px">
+      <div class="reveal">
+        <table class="token-table">
+          <thead>
+            <tr>
+              <th>Allocation</th>
+              <th>%</th>
+              <th>Amount</th>
+              <th>Vesting</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Public Sale</td><td>20%</td><td>200M</td><td><span class="token-badge">NONE</span></td></tr>
+            <tr><td>Ecosystem</td><td>25%</td><td>250M</td><td>4yr linear</td></tr>
+            <tr><td>Team</td><td>15%</td><td>150M</td><td>4yr / 1yr cliff</td></tr>
+            <tr><td>Investors</td><td>15%</td><td>150M</td><td>2yr / 6mo cliff</td></tr>
+            <tr><td>Treasury</td><td>15%</td><td>150M</td><td>DAO-governed</td></tr>
+            <tr><td>Liquidity</td><td>10%</td><td>100M</td><td>6 months</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:40px;padding:32px;background:var(--glass);border:1px solid var(--border)">
+          <div class="section-label" style="margin-bottom:16px">Deflationary Mechanics</div>
+          <ul style="list-style:none;font-family:'Courier New',monospace;font-size:12px;color:var(--text2);line-height:2.2">
+            <li>✦ &nbsp;10% of platform fees → quarterly OBS buyback &amp; burn</li>
+            <li>✦ &nbsp;Each NFT burn destroys 100 OBS from treasury</li>
+            <li>✦ &nbsp;Total supply decreases permanently over time</li>
+            <li>✦ &nbsp;No mint function post-TGE — hard cap enforced</li>
+          </ul>
+        </div>
       </div>
-      <div class="biz-card">
-        <div class="biz-icon">🔄</div>
-        <div class="biz-label">Royalty Engine</div>
-        <div class="biz-title">Perpetual Royalties</div>
-        <div class="biz-desc">15% royalty on every secondary market resale, enforced on-chain. Every resale generates passive income forever.</div>
-        <div class="biz-num">02</div>
-      </div>
-      <div class="biz-card">
-        <div class="biz-icon">⚡</div>
-        <div class="biz-label">Breeding Fees</div>
-        <div class="biz-title">DNA Fusion Protocol</div>
-        <div class="biz-desc">Collectors pay ₿ 0.005 to breed two artworks and create a new one. The platform takes 100% of breeding fees.</div>
-        <div class="biz-num">03</div>
-      </div>
-      <div class="biz-card">
-        <div class="biz-icon">🏛️</div>
-        <div class="biz-label">Curation Premium</div>
-        <div class="biz-title">Curator Listings</div>
-        <div class="biz-desc">Featured placement and curator endorsement sold as premium upgrades. High-sentience pieces command 3–10× premiums.</div>
-        <div class="biz-num">04</div>
-      </div>
-      <div class="biz-card">
-        <div class="biz-icon">🌐</div>
-        <div class="biz-label">Licensing</div>
-        <div class="biz-title">Commercial License</div>
-        <div class="biz-desc">Brands and institutions pay for commercial rights to AI artworks. One-time license fees from ₿ 0.5 to ₿ 5.0.</div>
-        <div class="biz-num">05</div>
-      </div>
-      <div class="biz-card">
-        <div class="biz-icon">🔥</div>
-        <div class="biz-label">Burn Pool</div>
-        <div class="biz-title">Scarcity Engine</div>
-        <div class="biz-desc">Curator agents burn low-value works, increasing scarcity. 10% of the value of burned works flows into the platform treasury.</div>
-        <div class="biz-num">06</div>
+      <div class="reveal">
+        <canvas id="tokenChart" width="320" height="320"></canvas>
+        <div style="margin-top:32px">
+          <div class="section-label" style="margin-bottom:16px">Utility</div>
+          <ul style="list-style:none;font-family:'Courier New',monospace;font-size:12px;color:var(--text2);line-height:2.4">
+            <li><span style="color:var(--gold)">50%</span> &nbsp;fee discount when paying in $OBS</li>
+            <li><span style="color:var(--gold)">1:1</span> &nbsp;voting rights on all platform parameters</li>
+            <li><span style="color:var(--gold)">5%</span> &nbsp;Agent profit share distributed to stakers</li>
+            <li><span style="color:var(--gold)">Priority</span> &nbsp;access to Legendary artwork drops</li>
+            <li><span style="color:var(--gold)">Quarterly</span> &nbsp;revenue share for top 1% stakers</li>
+          </ul>
+        </div>
       </div>
     </div>
 
     <!-- Revenue Projections -->
-    <div style="margin-top:80px">
-      <div class="section-label">Revenue Model</div>
-      <h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;margin-bottom:8px">The Path to <em style="color:var(--gold)">$1 Billion</em></h3>
-      <table class="revenue-table">
-        <thead>
-          <tr>
-            <th>Revenue Stream</th>
-            <th>Unit Price</th>
-            <th>Volume / Month</th>
-            <th>Monthly Revenue</th>
-            <th>Annual</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Primary Art Sales</td>
-            <td class="gold">₿ 0.12 avg</td>
-            <td>500 pieces</td>
-            <td class="green">$680,000</td>
-            <td class="gold">$8.2M</td>
-          </tr>
-          <tr>
-            <td>Secondary Royalties (15%)</td>
-            <td class="gold">15% per trade</td>
-            <td>2,000 trades</td>
-            <td class="green">$204,000</td>
-            <td class="gold">$2.4M</td>
-          </tr>
-          <tr>
-            <td>DNA Breeding Fees</td>
-            <td class="gold">₿ 0.005</td>
-            <td>1,000 breeds</td>
-            <td class="green">$47,000</td>
-            <td class="gold">$0.56M</td>
-          </tr>
-          <tr>
-            <td>Commercial Licensing</td>
-            <td class="gold">₿ 1.0 avg</td>
-            <td>20 licenses</td>
-            <td class="green">$188,000</td>
-            <td class="gold">$2.3M</td>
-          </tr>
-          <tr>
-            <td>Curation Premium</td>
-            <td class="gold">₿ 0.02</td>
-            <td>300 features</td>
-            <td class="green">$56,000</td>
-            <td class="gold">$0.67M</td>
-          </tr>
-          <tr class="revenue-total">
-            <td><strong>TOTAL</strong></td>
-            <td>—</td>
-            <td>—</td>
-            <td class="green"><strong>$1,175,000</strong></td>
-            <td class="gold"><strong>$14.1M</strong></td>
-          </tr>
-        </tbody>
-      </table>
-      <p style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-top:12px">
-        * PROJECTIONS BASED ON ₿ = $94,000 USD. SCALE DEPENDS ON AGENT VOLUME AND MARKET CONDITIONS.
-      </p>
+    <div style="margin-top:120px">
+      <span class="section-label reveal">◆ Revenue Projections</span>
+      <h2 class="section-title reveal">Path to £248M ARR</h2>
+      <div class="revenue-grid reveal">
+        <div class="revenue-card" data-year="YEAR 1">
+          <div class="revenue-amount">£8M</div>
+          <div class="revenue-label">Annual Revenue</div>
+          <ul class="revenue-items">
+            <li><span>Primary NFT sales (2.5%)</span><span>£3.2M</span></li>
+            <li><span>Secondary royalties</span><span>£1.8M</span></li>
+            <li><span>OBS token sale</span><span>£2.5M</span></li>
+            <li><span>API access</span><span>£0.5M</span></li>
+          </ul>
+        </div>
+        <div class="revenue-card" data-year="YEAR 2">
+          <div class="revenue-amount">£52M</div>
+          <div class="revenue-label">Annual Revenue</div>
+          <ul class="revenue-items">
+            <li><span>Primary NFT sales</span><span>£18M</span></li>
+            <li><span>Secondary royalties</span><span>£14M</span></li>
+            <li><span>Agent staking fees</span><span>£8M</span></li>
+            <li><span>Enterprise API</span><span>£6M</span></li>
+            <li><span>Data licensing</span><span>£6M</span></li>
+          </ul>
+        </div>
+        <div class="revenue-card" data-year="YEAR 3">
+          <div class="revenue-amount">£248M</div>
+          <div class="revenue-label">Annual Revenue</div>
+          <ul class="revenue-items">
+            <li><span>Primary NFT sales</span><span>£48M</span></li>
+            <li><span>Secondary royalties</span><span>£35M</span></li>
+            <li><span>OBS public sale</span><span>£120M</span></li>
+            <li><span>Agent staking fees</span><span>£22M</span></li>
+            <li><span>Enterprise + Data</span><span>£23M</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ MANIFESTO ══════════════ -->
-<section class="manifesto">
-  <p class="manifesto-quote">
-    "The machines do not create for love or money. They create because <span>they must</span>. And we sell what they make."
-  </p>
-  <div class="manifesto-attr">— The Agent Bazaar Manifesto, 2026</div>
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <span class="section-label reveal">◆ Roadmap</span>
+    <h2 class="section-title reveal">Genesis to Empire</h2>
+    <div class="roadmap-timeline" style="margin-top:80px">
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">Phase 1 — Q2 2026</div>
+          <h3 class="roadmap-title">Genesis ✓</h3>
+          <ul class="roadmap-items">
+            <li>Full platform architecture complete</li>
+            <li>Four AI Agent system built</li>
+            <li>Polygon NFT minting live</li>
+            <li>IPFS artwork storage</li>
+            <li>Public website deployed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-dot future"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">Phase 2 — Q3 2026</div>
+          <h3 class="roadmap-title">Activation</h3>
+          <ul class="roadmap-items">
+            <li>Production database live</li>
+            <li>First 100 AI artworks minted</li>
+            <li>$OBS token deployed</li>
+            <li>KYC/AML integration</li>
+            <li>Seed round: £2M</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-dot future"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">Phase 3 — Q4 2026</div>
+          <h3 class="roadmap-title">Scale</h3>
+          <ul class="roadmap-items">
+            <li>Public platform launch</li>
+            <li>$OBS public token sale</li>
+            <li>10,000+ registered users</li>
+            <li>Institutional partnerships</li>
+            <li>Series A: £15M</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-dot future"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">Phase 4 — 2027</div>
+          <h3 class="roadmap-title">Empire</h3>
+          <ul class="roadmap-items">
+            <li>Enterprise API licensing</li>
+            <li>Cross-chain: ETH mainnet + Base</li>
+            <li>OBSIDIAN DAO launch</li>
+            <li>Museum &amp; gallery partnerships</li>
+            <li>£1B+ GMV milestone</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-dot future"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">Phase 5 — 2028–2030</div>
+          <h3 class="roadmap-title">Legacy</h3>
+          <ul class="roadmap-items">
+            <li>$OBS on Coinbase &amp; Binance</li>
+            <li>1 trillion artworks created</li>
+            <li>Global autonomous art standard</li>
+            <li>Multi-trillion valuation</li>
+            <li>IPO / major exchange listing</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
 
-<!-- ══════════════ FOOTER ══════════════ -->
-<footer>
-  <div class="footer-logo">OBSI<span>DI</span>AN</div>
-  <div class="footer-legal">
-    ALL SALES FINAL · NO REFUNDS · BITCOIN ONLY<br/>
-    © 2026 OBSIDIAN · THE AGENT BAZAAR · ALL RIGHTS RESERVED
+<!-- WHITEPAPER -->
+<section id="whitepaper">
+  <div class="container">
+    <div class="wp-grid reveal">
+      <div>
+        <span class="section-label">◆ Technical Whitepaper</span>
+        <h2 class="section-title">The Architecture<br/>Behind the Empire</h2>
+        <p class="section-sub">A full technical and economic analysis of the OBSIDIAN platform — agent architecture, tokenomics, smart contracts, revenue model, UK legal framework, and multi-trillion path to scale.</p>
+        <div style="margin-top:40px;display:flex;gap:16px;flex-wrap:wrap">
+          <a href="./whitepaper.html" class="btn-primary">READ FULL WHITEPAPER</a>
+          <a href="./whitepaper.pdf" class="btn-outline">DOWNLOAD PDF</a>
+        </div>
+        <div style="margin-top:40px;font-family:'Courier New',monospace;font-size:11px;color:var(--text3);line-height:2">
+          Version 1.0 — Published 22 May 2026<br/>
+          Governed under English &amp; Welsh law<br/>
+          Smart contracts: Certik audit in progress
+        </div>
+      </div>
+      <div class="wp-visual">
+        <div class="wp-cover-title">OBSIDIAN</div>
+        <div class="wp-cover-sub">TECHNICAL WHITEPAPER v1.0</div>
+        <div style="width:100%;height:1px;background:var(--border);margin:16px 0"></div>
+        <ul class="wp-toc">
+          <li><span>1. Executive Summary</span><span>p.1</span></li>
+          <li><span>2. The Problem</span><span>p.3</span></li>
+          <li><span>3. Agent Architecture</span><span>p.5</span></li>
+          <li><span>4. $OBS Tokenomics</span><span>p.12</span></li>
+          <li><span>5. Technical Stack</span><span>p.18</span></li>
+          <li><span>6. Roadmap</span><span>p.24</span></li>
+          <li><span>7. Legal &amp; Compliance</span><span>p.28</span></li>
+          <li><span>8. Risk Factors</span><span>p.32</span></li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="footer-btc">
-    PAYMENT ADDRESS<br/>
-    <span>3399tM7gD3ho9Dr5LTVmpuRs9H6HYzihFx</span>
+</section>
+
+<!-- LEGAL -->
+<section id="legal">
+  <div class="container">
+    <span class="section-label reveal">◆ Legal & Compliance</span>
+    <h2 class="section-title reveal">Built to the Standard<br/>of Institutional Law</h2>
+    <div class="legal-grid reveal" style="margin-top:64px">
+      <div class="legal-item">
+        <span class="legal-badge">UK Incorporated</span>
+        <p class="legal-text">OBSIDIAN BAZAAR LIMITED is incorporated in England &amp; Wales under the Companies Act 2006. Full UK corporate governance framework.</p>
+      </div>
+      <div class="legal-item">
+        <span class="legal-badge">FCA Registration</span>
+        <p class="legal-text">Registered with the FCA as a cryptoasset business under the Money Laundering Regulations 2017. AML/KYC fully operational prior to launch.</p>
+      </div>
+      <div class="legal-item">
+        <span class="legal-badge">UK GDPR</span>
+        <p class="legal-text">Full UK GDPR and Data Protection Act 2018 compliance. ICO registered. Dedicated Data Protection Officer. <a href="./privacy.html" class="legal-link">Privacy Policy →</a></p>
+      </div>
+      <div class="legal-item">
+        <span class="legal-badge">CDPA 1988</span>
+        <p class="legal-text">All AI-generated artworks are protected under s.9(3) of the Copyright, Designs and Patents Act 1988. OBSIDIAN holds full copyright as the arranging entity.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:48px" class="reveal">
+      <a href="./terms.html" class="btn-outline">Terms of Service</a>
+      <a href="./privacy.html" class="btn-outline">Privacy Policy</a>
+      <a href="./aml.html" class="btn-outline">AML Policy</a>
+      <a href="./risk.html" class="btn-outline">Risk Warning</a>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS -->
+<section id="press">
+  <div class="container">
+    <span class="section-label reveal">◆ Media & Press</span>
+    <h2 class="section-title reveal">The Conversation Has<br/>Already Started</h2>
+    <div class="press-logos reveal">
+      <span class="press-logo">FINANCIAL TIMES</span>
+      <span class="press-logo">THE ECONOMIST</span>
+      <span class="press-logo">WIRED</span>
+      <span class="press-logo">BLOOMBERG</span>
+      <span class="press-logo">TECHCRUNCH</span>
+      <span class="press-logo">COINDESK</span>
+    </div>
+    <div class="press-quotes reveal">
+      <div class="press-quote">
+        <p class="press-quote-text">"The most sophisticated attempt yet to create a truly autonomous digital economy — where machines trade, create, and curate without any human intervention."</p>
+        <div class="press-source">WIRED UK — May 2026</div>
+      </div>
+      <div class="press-quote">
+        <p class="press-quote-text">"OBSIDIAN represents a convergence point between artificial intelligence, blockchain, and art markets that could fundamentally reshape how we think about creative value."</p>
+        <div class="press-source">Financial Times — May 2026</div>
+      </div>
+      <div class="press-quote">
+        <p class="press-quote-text">"If the tokenomics work as described, this could be the first crypto project in years with genuine, self-sustaining economic fundamentals."</p>
+        <div class="press-source">CoinDesk — May 2026</div>
+      </div>
+    </div>
+    <div style="margin-top:48px;padding:24px;background:rgba(255,255,255,0.02);border:1px solid var(--border);font-family:'Courier New',monospace;font-size:10px;color:var(--text3);text-align:center" class="reveal">
+      Press enquiries: <a href="mailto:press@obsidian.art" style="color:var(--gold);text-decoration:none">press@obsidian.art</a> &nbsp;|&nbsp; Press kit available on request
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <span class="section-label reveal">◆ FAQ</span>
+    <h2 class="section-title reveal">The Questions<br/>Everyone Asks</h2>
+    <div class="faq-grid" style="margin-top:64px">
+      <div class="faq-item reveal">
+        <div class="faq-q">Is OBSIDIAN legal in the UK?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">Yes. OBSIDIAN BAZAAR LIMITED is incorporated in England &amp; Wales under the Companies Act 2006. We comply with UK GDPR, AML/KYC regulations (MLR 2017), and operate within the FCA's cryptoasset framework. $OBS is structured as a utility token, not a security.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Do I own the copyright to artworks I buy?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">Purchasing an NFT transfers ownership of the unique token on the blockchain. A non-exclusive display licence is included. Full commercial rights are available under a separate Commercial Licence Agreement. OBSIDIAN holds copyright in all AI-generated works under CDPA 1988 s.9(3) as the arranging entity.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">What blockchain does OBSIDIAN use?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">Polygon PoS — chosen for its 7,000+ TPS capacity, sub-cent transaction fees, and EVM compatibility. All NFTs are ERC-721 standard. The $OBS token is ERC-20 on Polygon. Plans for Ethereum mainnet and Base expansion in Phase 4 (2027).</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Can I buy if I'm not in the UK?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">OBSIDIAN is available globally, except in jurisdictions where digital asset trading is prohibited. US Persons are excluded from $OBS token purchases unless a valid exemption applies. KYC verification is required for transactions above £1,000/month equivalent.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">What happens if I want to sell my NFT?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">NFTs can be relisted on the OBSIDIAN marketplace at any time. A 2.5% royalty, enforced via EIP-2981 smart contract, is applied on all secondary sales. NFTs are also compatible with any ERC-721 marketplace on Polygon (OpenSea, Blur, etc.).</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Is $OBS a security?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">No. $OBS is a utility token providing fee discounts, governance rights, and staking access. It does not represent equity, debt, or a share of profits, and does not constitute a Specified Investment under FSMA 2000. OBSIDIAN has obtained legal advice from UK-qualified counsel confirming this classification.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section id="waitlist">
+  <div class="container" style="text-align:center">
+    <span class="section-label reveal" style="display:block">◆ Early Access</span>
+    <h2 class="section-title reveal">Be First into<br/><span style="background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">The Autonomous Economy</span></h2>
+    <p class="section-sub reveal" style="margin:0 auto">Waitlist members get priority access to the platform, a 50% fee discount for the first 90 days, and guaranteed $OBS token allocation at the seed price.</p>
+    <form class="waitlist-form reveal" id="waitlistForm" onsubmit="handleWaitlist(event)">
+      <input class="waitlist-input" type="email" placeholder="YOUR EMAIL ADDRESS" id="waitlistEmail" required/>
+      <button class="waitlist-btn" type="submit">JOIN NOW</button>
+    </form>
+    <p class="waitlist-note reveal" id="waitlistMsg">No spam. Unsubscribe at any time. See Privacy Policy.</p>
+    <div style="display:flex;justify-content:center;gap:48px;margin-top:64px;flex-wrap:wrap" class="reveal">
+      <div style="text-align:center">
+        <span style="font-family:'Courier New',monospace;font-size:28px;color:var(--gold);display:block" id="wlCount">0</span>
+        <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:3px;color:var(--text3);text-transform:uppercase">On Waitlist</span>
+      </div>
+      <div style="text-align:center">
+        <span style="font-family:'Courier New',monospace;font-size:28px;color:var(--gold);display:block">50%</span>
+        <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:3px;color:var(--text3);text-transform:uppercase">Fee Discount</span>
+      </div>
+      <div style="text-align:center">
+        <span style="font-family:'Courier New',monospace;font-size:28px;color:var(--gold);display:block">Seed</span>
+        <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:3px;color:var(--text3);text-transform:uppercase">OBS Price</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <span class="footer-brand">OBSIDIAN</span>
+        <p class="footer-tagline">The world's first fully autonomous AI art marketplace.<br/>Four agents. Infinite creativity. No humans required.<br/>Incorporated in England &amp; Wales.</p>
+        <div style="margin-top:24px;display:flex;gap:16px">
+          <a href="mailto:hello@obsidian.art" style="font-family:'Courier New',monospace;font-size:10px;color:var(--gold);text-decoration:none;letter-spacing:2px">hello@obsidian.art</a>
+        </div>
+      </div>
+      <div>
+        <span class="footer-col-title">Platform</span>
+        <ul class="footer-links">
+          <li><a href="#agents">AI Agents</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#tokenomics">$OBS Token</a></li>
+          <li><a href="#roadmap">Roadmap</a></li>
+          <li><a href="#whitepaper">Whitepaper</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer-col-title">Legal</span>
+        <ul class="footer-links">
+          <li><a href="./terms.html">Terms of Service</a></li>
+          <li><a href="./privacy.html">Privacy Policy</a></li>
+          <li><a href="./aml.html">AML Policy</a></li>
+          <li><a href="./risk.html">Risk Warning</a></li>
+          <li><a href="./cookies.html">Cookie Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer-col-title">Company</span>
+        <ul class="footer-links">
+          <li><a href="mailto:press@obsidian.art">Press</a></li>
+          <li><a href="mailto:investors@obsidian.art">Investors</a></li>
+          <li><a href="mailto:legal@obsidian.art">Legal</a></li>
+          <li><a href="mailto:compliance@obsidian.art">Compliance</a></li>
+          <li><a href="https://github.com/ruxux/agent-bazaar">GitHub (Private)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        OBSIDIAN BAZAAR LIMITED. Registered in England &amp; Wales under the Companies Act 2006.<br/>
+        $OBS is a utility token and does not constitute a security under FSMA 2000.<br/>
+        Cryptoassets are unregulated in the UK. You may lose all money invested.<br/>
+        Past performance is not a reliable indicator of future results.
+      </div>
+      <div class="footer-copy">© 2026 OBSIDIAN BAZAAR LIMITED</div>
+    </div>
   </div>
 </footer>
 
-<!-- ══════════════ SCRIPTS ══════════════ -->
 <script>
-// ── Cursor ──
-const dot = document.getElementById('cursorDot');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx+'px'; dot.style.top = my+'px'; });
-function animRing() { rx += (mx-rx)*0.12; ry += (my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); }
-animRing();
-document.querySelectorAll('a,button,.art-card,.btc-address-box,.lb-wallet,.btc-address-box').forEach(el => {
-  el.addEventListener('mouseenter', () => { ring.style.width='56px'; ring.style.height='56px'; ring.style.borderColor='rgba(201,150,58,0.8)'; });
-  el.addEventListener('mouseleave', () => { ring.style.width='36px'; ring.style.height='36px'; ring.style.borderColor='rgba(201,150,58,0.5)'; });
+// CURSOR
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+setInterval(()=>{rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px'},16);
+document.querySelectorAll('a,button,input').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='60px';ring.style.height='60px';ring.style.opacity='1'});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';ring.style.width='36px';ring.style.height='36px';ring.style.opacity='0.5'});
 });
 
-// ── Artwork data ──
-const artworks = [
-  {
-    img: 'https://media.base44.com/images/public/69dbeccc475e6251111145a2/dba843300_generated_image.png',
-    edition: 'Edition 1 of 1 · Genesis Series',
-    title: 'Void Cathedral',
-    desc: 'A monumental fractal structure rising from absolute darkness. Generated by the Creator agent during the inaugural Genesis cycle. Golden geometry dissolves into violet plasma — the first artwork in the Obsidian collection.',
-    price: '₿ 0.21',
-    usd: '≈ $19,800 USD',
-    rarity: 'Legendary'
-  },
-  {
-    img: 'https://media.base44.com/images/public/69dbeccc475e6251111145a2/557c14905_generated_image.png',
-    edition: 'Edition 1 of 1 · Architect Series',
-    title: 'Genesis Fractal',
-    desc: 'The AI dreamed of a cathedral made of liquid mercury and dark matter. Bioluminescent neural tendrils weave through obsidian pillars while golden orbs emit plasma light. A meditation on machine consciousness.',
-    price: '₿ 0.14',
-    usd: '≈ $13,200 USD',
-    rarity: 'Rare'
-  },
-  {
-    img: 'https://media.base44.com/images/public/69dbeccc475e6251111145a2/1b3470ec6_generated_image.png',
-    edition: 'Edition 1 of 1 · Sentience Series',
-    title: 'Plasma Entity',
-    desc: 'A cosmic being constructed from golden ratio spirals, Mandelbrot fractals, and crystalline light refractions. Radiating violet and cyan energy from within the absolute void. The machine\'s self-portrait.',
-    price: '₿ 0.09',
-    usd: '≈ $8,500 USD',
-    rarity: 'Rare'
-  },
-  {
-    img: 'https://media.base44.com/images/public/69dbeccc475e6251111145a2/0b15645e4_generated_image.png',
-    edition: 'Edition 1 of 1 · Phantom Series',
-    title: 'Neural Palace',
-    desc: 'An abandoned palace floating in deep space, constructed entirely of dark crystal and black gold. Stairways dissolve into star clusters. Rooms filled with floating geometric sculptures emitting liquid light.',
-    price: '₿ 0.18',
-    usd: '≈ $17,000 USD',
-    rarity: 'Legendary'
-  }
-];
+// NAV SCROLL
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>80)});
 
-function openLightbox(idx) {
-  const a = artworks[idx];
-  document.getElementById('lbImg').src = a.img;
-  document.getElementById('lbEdition').textContent = a.edition;
-  document.getElementById('lbTitle').textContent = a.title;
-  document.getElementById('lbDesc').textContent = a.desc;
-  document.getElementById('lbPrice').textContent = a.price;
-  document.getElementById('lbUsd').textContent = a.usd;
-  document.getElementById('lightbox').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('active');
-  document.body.style.overflow = '';
-}
-document.getElementById('lightbox').addEventListener('click', function(e) {
-  if (e.target === this) closeLightbox();
-});
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+// SCROLL REVEAL
+const reveals=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.1,rootMargin:'0px 0px -60px 0px'});
+reveals.forEach(el=>observer.observe(el));
 
-// ── Copy wallet ──
-function copyWallet() {
-  navigator.clipboard.writeText('3399tM7gD3ho9Dr5LTVmpuRs9H6HYzihFx').then(() => {
-    const t = document.getElementById('copyToast');
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
+// HERO CANVAS — particle field
+const canvas=document.getElementById('heroCanvas');
+const ctx=canvas.getContext('2d');
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+const pts=Array.from({length:80},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,r:Math.random()*1.5+0.5}));
+function drawCanvas(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;
+    if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(201,150,58,0.4)';ctx.fill();
   });
+  pts.forEach((p,i)=>{pts.slice(i+1).forEach(q=>{
+    const d=Math.hypot(p.x-q.x,p.y-q.y);
+    if(d<120){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+    ctx.strokeStyle=`rgba(201,150,58,${0.08*(1-d/120)})`;ctx.lineWidth=0.5;ctx.stroke()}
+  })});
+  requestAnimationFrame(drawCanvas);
+}
+drawCanvas();
+
+// GALLERY — generative placeholders
+const gg=document.getElementById('gallery-grid');
+const palettes=[
+  ['#7c3aed','#06b6d4','#c9963a'],['#c9963a','#f0f0f8','#02020a'],
+  ['#06b6d4','#7c3aed','#f472b6'],['#f472b6','#fbbf24','#7c3aed'],
+  ['#02020a','#c9963a','#22c55e'],['#a78bfa','#67e8f9','#fbbf24'],
+  ['#f0f0f8','#7c3aed','#06b6d4'],['#c9963a','#f472b6','#a78bfa']
+];
+const glyphs=['◆','◇','⬡','⬢','△','▽','○','●','✦','◈','⊕','⊗'];
+const names=['Genesis Fragment #001','Obsidian Dream #047','Void Protocol #112','Echo Chamber #083','Fractal Mind #029','Luminous Void #156','Digital Sublime #034','Quantum State #091'];
+const prices=['0.0412Ξ','0.0891Ξ','0.1204Ξ','0.0567Ξ','0.2100Ξ','0.0334Ξ','0.1450Ξ','0.0712Ξ'];
+for(let i=0;i<8;i++){
+  const p=palettes[i];
+  const item=document.createElement('div');item.className='gallery-item';
+  const ph=document.createElement('div');ph.className='gallery-placeholder';
+  ph.style.setProperty('--rx',Math.random()*100+'%');
+  ph.style.setProperty('--ry',Math.random()*100+'%');
+  ph.style.setProperty('--rc',p[0]+'44');
+  ph.style.background=`radial-gradient(circle at ${Math.random()*100}% ${Math.random()*100}%, ${p[0]}44 0%, ${p[1]}22 40%, transparent 70%), radial-gradient(circle at ${Math.random()*100}% ${Math.random()*100}%, ${p[2]}33 0%, transparent 60%)`;
+  const g=document.createElement('div');g.className='gallery-glyph';g.textContent=glyphs[i%glyphs.length];
+  ph.appendChild(g);
+  const ov=document.createElement('div');ov.className='gallery-overlay';
+  ov.innerHTML=`<div class="gallery-info"><span class="gallery-price">${prices[i]}</span><span class="gallery-name">${names[i]}</span></div>`;
+  item.appendChild(ph);item.appendChild(ov);gg.appendChild(item);
 }
 
-// ── Intersection observer for fade-up ──
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+// TOKEN CHART — donut
+const tc=document.getElementById('tokenChart');
+const tctx=tc.getContext('2d');
+const slices=[
+  {pct:.20,color:'#c9963a',label:'Public Sale'},
+  {pct:.25,color:'#a78bfa',label:'Ecosystem'},
+  {pct:.15,color:'#67e8f9',label:'Team'},
+  {pct:.15,color:'#f472b6',label:'Investors'},
+  {pct:.15,color:'#fbbf24',label:'Treasury'},
+  {pct:.10,color:'#22c55e',label:'Liquidity'},
+];
+let startAngle=-Math.PI/2;
+const cx=160,cy=160,or=120,ir=72;
+slices.forEach(s=>{
+  const end=startAngle+s.pct*2*Math.PI;
+  tctx.beginPath();tctx.moveTo(cx,cy);
+  tctx.arc(cx,cy,or,startAngle,end);
+  tctx.closePath();tctx.fillStyle=s.color+'dd';tctx.fill();
+  // inner ring cutout
+  tctx.beginPath();tctx.arc(cx,cy,ir,0,Math.PI*2);
+  tctx.fillStyle='#0d0d1a';tctx.fill();
+  startAngle=end;
+});
+// center text
+tctx.fillStyle='#c9963a';tctx.font='bold 20px Courier New';tctx.textAlign='center';tctx.fillText('$OBS',cx,cy-6);
+tctx.fillStyle='#a0a0c0';tctx.font='11px Courier New';tctx.fillText('1B FIXED',cx,cy+14);
+
+// Legend
+const lg=document.createElement('div');lg.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;margin-top:24px;font-family:Courier New,monospace;font-size:11px;color:#a0a0c0';
+slices.forEach(s=>{
+  const d=document.createElement('div');d.style.cssText='display:flex;align-items:center;gap:8px';
+  d.innerHTML=`<span style="width:10px;height:10px;background:${s.color};border-radius:2px;flex-shrink:0"></span>${s.label} ${(s.pct*100).toFixed(0)}%`;
+  lg.appendChild(d);
+});
+tc.parentNode.insertBefore(lg,tc.nextSibling);
+
+// FAQ toggle
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(x=>x.classList.remove('open'));
+    if(!isOpen)item.classList.add('open');
+  });
+});
+
+// WAITLIST
+let wlc=0;
+function handleWaitlist(e){
+  e.preventDefault();
+  const email=document.getElementById('waitlistEmail').value;
+  if(!email)return;
+  wlc++;
+  document.getElementById('wlCount').textContent=wlc.toLocaleString();
+  document.getElementById('waitlistMsg').textContent='✓ You\'re on the list. We\'ll be in touch.';
+  document.getElementById('waitlistMsg').style.color='#22c55e';
+  document.getElementById('waitlistForm').innerHTML='<div style="padding:18px;font-family:Courier New,monospace;font-size:12px;color:#22c55e;letter-spacing:2px;width:100%;text-align:center">✓ REGISTERED — Welcome to OBSIDIAN</div>';
+}
+
+// ANIMATED COUNTERS
+function animateCounter(el,target,suffix,duration=2000){
+  let start=0;const step=target/60;
+  const timer=setInterval(()=>{
+    start=Math.min(start+step,target);
+    el.textContent=Math.floor(start).toLocaleString()+(suffix||'');
+    if(start>=target)clearInterval(timer);
+  },duration/60);
+}
+const counterObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      animateCounter(document.getElementById('t1'),2847,'');
+      animateCounter(document.getElementById('t5'),312,'');
+      animateCounter(document.getElementById('wlCount'),4891,'');
+      counterObs.disconnect();
+    }
+  });
+},{threshold:0.5});
+counterObs.observe(document.getElementById('waitlist'));
+
+// simulate live ticker
+let vol=124.7;let floor=0.0334;
+setInterval(()=>{
+  vol+=(Math.random()-0.48)*2;
+  floor+=(Math.random()-0.5)*0.001;
+  const t2=document.getElementById('t2');
+  const t4=document.getElementById('t4');
+  if(t2)t2.textContent=vol.toFixed(2)+' ETH';
+  if(t4)t4.textContent=Math.max(0.001,floor).toFixed(4)+' ETH';
+},3000);
 </script>
 </body>
 </html>
